@@ -1,0 +1,93 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="bas3.it.basfp.FingerPrint">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.17"
+        android:text="@string/registrazione_manuale"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="avvia la registrazione premendo il pulsante blu e fermala premendo il pulsante verde"
+        android:textColor="#2C3646"
+        android:textSize="15sp" />
+
+
+
+    <TextView
+        android:id="@+id/txt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt4"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:text="La durata e l'ora di inizio di ogni registrazione sono visibili premendo l'icona Log"
+        android:textColor="#2C3646"
+        android:textSize="13sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnAvviaRegistrazione"
+
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:src="@drawable/ic_icon_play"
+            app:backgroundTint="@android:color/holo_blue_dark"/>
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="30sp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnFineRegistrazione"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:src="@drawable/ic_icon_stop"
+            app:backgroundTint="@android:color/holo_green_dark"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnAnnullaRegistrazione"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="26dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_icon_abort"
+            android:visibility="gone"
+            app:backgroundTint="@android:color/holo_red_dark"/>
+    </LinearLayout>
+
+</FrameLayout>

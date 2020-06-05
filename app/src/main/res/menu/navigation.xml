@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_icon_home"
+        android:title="Home" />
+
+    <!--item
+        android:id="@+id/navigation_clock"
+        android:icon="@drawable/ic_icon_clock"
+        android:title="Clock"
+        android:visible="false" /-->
+
+    <item
+        android:id="@+id/navigation_finger"
+        android:icon="@drawable/ic_icon_rec"
+        android:title="Rec" />
+
+    <!--item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_icon_settings"
+        android:title="Setting"/-->
+
+    <item
+        android:id="@+id/navigation_logs"
+        android:icon="@drawable/ic_icon_log"
+        android:title="Log"/>
+
+</menu>

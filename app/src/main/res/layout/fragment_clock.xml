@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".fragment.ClockFragment">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_aagioungi_alarm"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_icon_add_clock"
+        app:backgroundTint="@android:color/holo_blue_dark" />
+
+    <ListView
+        android:id="@+id/alarm_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="6dp"
+        android:scrollbars="none"/>
+
+
+</FrameLayout>

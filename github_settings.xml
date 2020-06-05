@@ -1,0 +1,7 @@
+<application>
+  <component name="GithubSettings">
+    <option name="LOGIN" value="a.tessitore@intersistemi.it" />
+    <option name="HOST" value="http://geogitlab1.intersistemi.it/csa/appascolto.git" />
+    <option name="AUTH_TYPE" value="BASIC" />
+  </component>
+</application>

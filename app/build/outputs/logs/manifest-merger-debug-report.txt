@@ -1,0 +1,180 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:2:1-17:12
+MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\57a7442f8c01ebd6bd1c00e73d5fc99e\animated-vector-drawable-25.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\150e2651a8fd960f3948e674fe0ffc91\support-vector-drawable-25.2.0\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:transition:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc7bb7ffd24a206a0414f65669e4c590\transition-25.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\940f653735bd0777c15e7815b32326ea\support-v4-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:recyclerview-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\db1321fccffede9a091c2000dee9be10\recyclerview-v7-25.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc4b43fcf187e8c37302cfdea858f1bd\support-fragment-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\3e7225fd0d6af8146f4ceaf14651c749\support-media-compat-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:17:1-27:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+	package
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:70-99
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:4:5-78
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:4:22-76
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:6:5-80
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:7:22-77
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:8:5-70
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:8:22-68
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:22-78
+application
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:5-41:19
+MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:11:5-15:19
+MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\57a7442f8c01ebd6bd1c00e73d5fc99e\animated-vector-drawable-25.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\57a7442f8c01ebd6bd1c00e73d5fc99e\animated-vector-drawable-25.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\150e2651a8fd960f3948e674fe0ffc91\support-vector-drawable-25.2.0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\150e2651a8fd960f3948e674fe0ffc91\support-vector-drawable-25.2.0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:transition:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc7bb7ffd24a206a0414f65669e4c590\transition-25.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:transition:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc7bb7ffd24a206a0414f65669e4c590\transition-25.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\940f653735bd0777c15e7815b32326ea\support-v4-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\940f653735bd0777c15e7815b32326ea\support-v4-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc4b43fcf187e8c37302cfdea858f1bd\support-fragment-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc4b43fcf187e8c37302cfdea858f1bd\support-fragment-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\3e7225fd0d6af8146f4ceaf14651c749\support-media-compat-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\3e7225fd0d6af8146f4ceaf14651c749\support-media-compat-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:25:5-20
+	android:supportsRtl
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:16:9-35
+	android:label
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:14:9-41
+	android:roundIcon
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:15:9-55
+	android:icon
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:13:9-50
+	android:allowBackup
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:17:9-40
+activity#intersistemi.it.afp.activity.MainActivity
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:18:9-26:20
+	android:screenOrientation
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:21:13-49
+	android:label
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:20:13-45
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:19:13-50
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:22:13-25:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:17-68
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:17-76
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:27-74
+receiver#bas3.it.basfp.broadcast.AlarmReceiverBroadcast
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:9-109
+	android:process
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:81-106
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:19-80
+receiver#bas3.it.basfp.broadcast.AlarmBootReceiverBroadcast
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:9-35:20
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:19-84
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:13-34:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:17-79
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:25-76
+service#bas3.it.basfp.FingerPrint
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:37:9-40:19
+	android:exported
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:39:13-37
+	android:name
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:38:13-53
+uses-sdk
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:7:5-9:41
+MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\57a7442f8c01ebd6bd1c00e73d5fc99e\animated-vector-drawable-25.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\57a7442f8c01ebd6bd1c00e73d5fc99e\animated-vector-drawable-25.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\150e2651a8fd960f3948e674fe0ffc91\support-vector-drawable-25.2.0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\150e2651a8fd960f3948e674fe0ffc91\support-vector-drawable-25.2.0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:transition:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc7bb7ffd24a206a0414f65669e4c590\transition-25.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc7bb7ffd24a206a0414f65669e4c590\transition-25.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\940f653735bd0777c15e7815b32326ea\support-v4-25.2.0\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\940f653735bd0777c15e7815b32326ea\support-v4-25.2.0\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:recyclerview-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\db1321fccffede9a091c2000dee9be10\recyclerview-v7-25.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\db1321fccffede9a091c2000dee9be10\recyclerview-v7-25.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc4b43fcf187e8c37302cfdea858f1bd\support-fragment-25.2.0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\fc4b43fcf187e8c37302cfdea858f1bd\support-fragment-25.2.0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\3e7225fd0d6af8146f4ceaf14651c749\support-media-compat-25.2.0\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\3e7225fd0d6af8146f4ceaf14651c749\support-media-compat-25.2.0\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:21:5-23:58
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml

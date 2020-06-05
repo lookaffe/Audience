@@ -1,0 +1,43 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:1-11:12
+	package
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:3:7-40
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:5:7-32
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:4:7-30
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+application
+ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:7:5-9:19
+	android:label
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:7:48-80
+	android:icon
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml:7:18-47
+uses-sdk
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		ADDED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
+		INJECTED from F:\Lavoro\CSA\SARA\appascolto\echoprintLib\src\main\AndroidManifest.xml
