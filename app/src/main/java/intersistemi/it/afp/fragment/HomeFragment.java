@@ -28,6 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Time;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
@@ -35,6 +40,7 @@ import basfp.it.bas3.support.HttpRequest;
 import basfp.it.bas3.support.LogAndroid;
 import intersistemi.it.afp.BuildConfig;
 import intersistemi.it.afp.R;
+import intersistemi.it.afp.activity.MainActivity;
 import intersistemi.it.afp.util.Util;
 
 import static android.content.Intent.getIntent;
@@ -56,6 +62,7 @@ public class HomeFragment extends Fragment
     private ProgressDialog dialog;
     private TextView userLogged;
     private Util util;
+    private String pathBase, EXT_PATH, INT_PATH, PATH_TEMP;
 
 
 
@@ -88,6 +95,15 @@ public class HomeFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
     {
+        EXT_PATH = getArguments().getString("ext_path");
+        INT_PATH = getArguments().getString("int_path");
+        LogAndroid.info("HomeFragment EXT_PAth", EXT_PATH);
+        LogAndroid.info("HomeFragment INT_PAth", INT_PATH);
+        pathBase= EXT_PATH + File.separator + getString(R.string.app_name);
+        Toast mess2 = Toast.makeText(getActivity(), pathBase, Toast.LENGTH_SHORT);
+        mess2.setGravity(Gravity.CENTER, 0, 0);
+        mess2.show();
+
         if(logged)
             ll = inflater.inflate(R.layout.fragment_home_logged, container, false);
         else
@@ -96,7 +112,7 @@ public class HomeFragment extends Fragment
         btnAccedi = (Button) ll.findViewById(R.id.login);
         btnAccedi.setOnClickListener(btnAccediOnClick);
         TextView bn =(TextView) ll.findViewById(R.id.build_number);
-        bn.setText("Build no. : "+ BuildConfig.VERSION_NAME+"\nContatti: infoaudience@csa.intersistemi.it");
+        bn.setText("Build no. : "+ BuildConfig.VERSION_NAME+"\nContatti: infoaudience@csaresearch.it");
 
         return ll;
     }
@@ -150,16 +166,6 @@ public class HomeFragment extends Fragment
         }
     };
 
-    public String getCiao()
-    {
-
-        return "ciao";
-    }
-
-
-
-
-
     private class LoginTask extends AsyncTask<String,String,String>
     {
         @Override
@@ -174,14 +180,11 @@ public class HomeFragment extends Fragment
                 }
             });
 
-
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
             return jsonResult[0];
         }
 
@@ -197,6 +200,10 @@ public class HomeFragment extends Fragment
 
                 JSONArray data = jsonResponse.getJSONArray("data");
                 if (data.getJSONObject(0).getString("esito").equals("FOUND")){
+
+                    MainActivity v = (MainActivity) getActivity();
+                    v.setUser(data.getJSONObject(0).getString("nome"));
+
                     RelativeLayout rl = (RelativeLayout) ll.findViewById(R.id.home_login);
                     rl.removeAllViews();
                     rl.addView(View.inflate(getContext(), R.layout.fragment_home_logged, null));

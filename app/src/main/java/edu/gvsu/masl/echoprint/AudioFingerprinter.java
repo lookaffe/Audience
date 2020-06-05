@@ -30,7 +30,7 @@ import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Environment;
+
 import android.util.Log;
 
 
@@ -103,7 +103,7 @@ public class AudioFingerprinter implements Runnable
 	public void fingerprint()
 	{
 		// set default listening time to 20 seconds
-		this.fingerprint(20);
+		this.fingerprint(10);
 	}
 	
 	/**
@@ -255,6 +255,7 @@ public class AudioFingerprinter implements Runnable
 
 					// create an echoprint codegen wrapper and get the code
 					time = System.currentTimeMillis();
+
 					Codegen codegen = new Codegen();
 					//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
 	    			code = codegen.generate(audioData, samplesIn);

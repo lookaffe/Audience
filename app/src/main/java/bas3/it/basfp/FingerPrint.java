@@ -11,49 +11,43 @@ import android.media.MediaRecorder;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.SystemClock;
 import android.provider.Settings;
+import android.provider.Settings.Secure;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Chronometer;
 import android.widget.TextView;
-import android.provider.Settings.Secure;
 import android.widget.Toast;
 
 import com.google.protobuf.ByteString;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.ScheduledExecutorService;
 
-
 import basfp.it.bas3.support.HttpRequest;
 import basfp.it.bas3.support.LogAndroid;
 import basfp.it.bas3.support.Utility;
+import edu.gvsu.masl.echoprint.AudioFingerprinter;
+import edu.gvsu.masl.echoprint.AudioFingerprinter.AudioFingerprinterListener;
 import intersistemi.it.afp.R;
 import intersistemi.it.afp.util.Util;
 
-import org.apache.commons.io.FileUtils;
-
 import static intersistemi.it.afp.util.Util.TAG;
-import edu.gvsu.masl.echoprint.AudioFingerprinter;
-import edu.gvsu.masl.echoprint.AudioFingerprinter.AudioFingerprinterListener;
 
 public class FingerPrint extends IntentService implements AudioFingerprinterListener
 {
@@ -72,6 +66,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     private static final String DIR_FP = "/bas_fp/";
     private static final String DIR_WAVE = "/bas_wave/";
     private static final String DIR_TEMP = "/bas_temp/";
+    private static final String FILE_USER = "user.txt";
     private static final String SERVER_NOT_FOUND_TITLE = "Server non raggiungibile";
     private static final String SERVER_NOT_FOUND_BODY = "Il server non risulta essere raggiungibile. Ricontrollare la connessione di rete e riprovare, grazie.";
     private String PATH_FP, FILE_FP,PATH_WAVE,FILE_WAVE,PATH_TEMP;
@@ -98,6 +93,10 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     private static final String LOG_FILENAME = "loguploads.txt";
     private android.util.Log Log;
 
+    private TextView userLogged;
+
+    private String user_name;
+
     boolean recording, resolved;
     AudioFingerprinter fingerprinter;
 
@@ -119,67 +118,39 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         context=activity.getApplicationContext();
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         util= new Util();
+
+
+    }
+
+    private String readFile(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
     }
 
     public void createFP() throws Exception {
-            /*
-            ByteArrayOutputStream ous = null;
-            InputStream ios = null;
-            try {
-                byte[] buffer = new byte[bufferSize];
-                ous = new ByteArrayOutputStream();
-                ios = new FileInputStream(file);
-                int read = 0;
-                while ((read = ios.read(buffer)) != -1) {
-                    ous.write(buffer, 0, read);
-                }
-            }catch(Exception e){
-                LogAndroid.info(TAG, e.getMessage());
-            }finally {
-                try {
-                    if (ous != null)
-                        ous.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (ios != null)
-                        ios.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            */
-
-        //audioData = ous.toByteArray();
-        /*
-            audioData = FileUtils.readFileToByteArray(new File(file));
-
-
-         */
         it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
-        /* invece di passare bs come ByteArray del wav, generiamo qui la fingerprint e passiamo quella
-
-         */
 
         // fingerprinting the audio file
         if(fingerprinter == null)
             fingerprinter = new AudioFingerprinter(FingerPrint.this);
 
         String codefp = fingerprinter.getCode();
-        //Android.info("Ask for", "code:" + codefp);
         short[] audio = fingerprinter.getAudioData();
-        //LogAndroid.info("Ask for", "audio");
 
         fingerprinter.fingerprint(20, false);
 
-
-
-
         if(codefp!=null && codefp!=precodefp){ //questo if serve per controllare che ci sia una fingerprint da spedire e sia diversa dalla precedente. Può essere sostituito con un corretto controllo sui thread
-
-
             //manda fp
             ByteString bs=ByteString.copyFrom(codefp, "UTF-8");
 
@@ -187,62 +158,25 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             //nuovi campi per invio info utente
 
             //spedisce i dati al server
-            acb.setUsername("giacomo_test");
+            LogAndroid.info("USER",user_name);
+            acb.setUsername(user_name);
             acb.setDatainvio(System.currentTimeMillis());
             acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
-            acb.setPassword("giacomo_password");
+            acb.setPassword("user_password");
 
             byte[] message =  acb.build().toByteArray();
             String urlstr = Util.getInstance().getProperty(context,Util.UPLOAD_SERVER_URL_PROPERTY);
-            //HttpRequest request = HttpRequest.post(urlstr).contentType("application/x-www-form-urlencoded").connectTimeout('\uea60').disconnect();
-            //HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
             HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
             request.send(message);
             String result = request.body();
-
-
-/*
-            LogAndroid.info("Check code ", "different than before");
-            LogAndroid.info("Check audio ", "audio" + Arrays.toString(audio));
-            //LogAndroid.info("Check audio ", "audio" + codefp);
-            //manda audio
-            writeWav(audio);
-
-            audioData = FileUtils.readFileToByteArray(new File(FILE_WAVE));
-            //audioData = short2byte(audio);
-            ByteString bs=ByteString.copyFrom(audioData);
-
-            acb.setData(bs); //invia il file audio
-            //nuovi campi per invio info utente
-
-            //spedisce i dati al server
-            acb.setUsername("giacomo_test");
-            acb.setDatainvio(System.currentTimeMillis());
-            acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
-            acb.setPassword("giacomo_password");
-
-            byte[] message =  acb.build().toByteArray();
-            String urlstr = Util.getInstance().getProperty(context,Util.UPLOAD_SERVER_URL_PROPERTY);
-            //HttpRequest request = HttpRequest.post(urlstr).contentType("application/x-www-form-urlencoded").connectTimeout('\uea60').disconnect();
-            //HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
-            HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
-            request.send(message);
-            String result = request.body();
-
-
-            LogAndroid.info("Send audio", "sended");
- */
 
             precodefp=codefp;
         }
-
 
         if(audio != null && audio!=preaudio) {
             //writeWav(audio);
             preaudio = audio;
         }
-
-
     }
 
     private void getSoundNotification(){
@@ -263,8 +197,6 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
                 mess.show();
             }
         });
-
-
     }
 
     @Override
@@ -274,84 +206,34 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         final String action = intent.getAction();
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         util= new Util();
-        pathBase = Environment.getExternalStorageDirectory()+ File.separator + getString(R.string.app_name);
+
         minSplitFile=1;
         context=getApplicationContext();
-        startAutoRecording();
-    }
-
-    private void startAutoRecording()
-    {
-        LogAndroid.info(TAG, "startAutoRecording");
-        avviaRegistrazione(false,true);
     }
 
 
     private void inizializzaPath()
     {
-
         PATH_WAVE=pathBase+DIR_WAVE;
+        LogAndroid.info("path per wave", PATH_WAVE);
         File app1= new File(PATH_WAVE);
         if(!app1.exists())
             app1.mkdirs();
-
     }
 
+    public void setUser_name(String name){
+        this.user_name = name;
+    }
 
     public void startRec() throws IOException {
-/*
-        String state = android.os.Environment.getExternalStorageState();
-        if(!state.equals(android.os.Environment.MEDIA_MOUNTED))  {
-            throw new IOException("SD Card is not mounted.  It is " + state + ".");
-        }
 
-        // make sure the directory we plan to store the recording in exists
-        inizializzaPath();
-
-        File storageDir = new File(pathBase + DIR_WAVE);
-        storageDir.mkdir();
-        File outfile=File.createTempFile(AUDIO_RECORDER_TEMP_FILE, ".wav",storageDir);
-        FILE_WAVE = outfile.getAbsolutePath();
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        mediaRecorder.setOutputFile(outfile.getAbsolutePath());
-
-        mediaRecorder.setAudioChannels(2);
-        mediaRecorder.setAudioSamplingRate(RECORDER_SAMPLERATE);
-
-        mediaRecorder.setMaxDuration(AUDIO_TRUNK_MAX_DURATION_MS);
-        mediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
-            @Override
-            public void onInfo(MediaRecorder mr, int what, int extra) {
-                if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
-                    mr.stop();
-                    mr.release();
-
-
- */
         new CodificaTask().execute(false);
-               /* }
-            }
-        });
-
-        mediaRecorder.prepare();
-        mediaRecorder.start();
-
-                */
     }
 
     /**
      * Stops a recording that has been previously started.
      */
-    public void stopRec() throws IOException {
-
-        /*if (null != mediaRecorder) {
-            mediaRecorder.stop();
-            mediaRecorder.release();
-        }
-        */
+    public void stopRec() {
         if(recording)
         {
             fingerprinter.stop();
@@ -368,80 +250,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
 
-    public void avviaRegistrazione(boolean avvioDaSchedulatore,boolean autoStart)
-    {
-        inizializzaPath();
-        LogAndroid.info(TAG, "avviaRegistrazione");
-        if(idRegistrazione==null)
-            idRegistrazione = util.getRandommIdRegistrazione();
 
-
-        startRec = util.getCurrectTimestamp();
-        recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, bufferSize);
-
-        int i = recorder.getState();
-        if (i == 1)
-            recorder.startRecording();
-
-        isRecording = true;
-
-        recordingThread = new Thread(new Runnable()
-        {
-
-            @Override
-            public void run()
-            {
-                writeAudioDataToFile();
-            }
-        }, "AudioRecorder Thread");
-
-        recordingThread.start();
-
-
-        /*
-        if(!avvioDaSchedulatore)
-        {
-            LogAndroid.info(TAG, "Executors.avvioDaSchedulatore");
-            exec = Executors.newSingleThreadScheduledExecutor();
-            exec.scheduleAtFixedRate(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    gestisciRegistrazione();
-                }
-            }, minSplitFile, minSplitFile, TimeUnit.MINUTES);
-        }
-        if(autoStart)
-        {
-            LogAndroid.info(TAG, "Executors.autoStart");
-            execAuto = Executors.newSingleThreadScheduledExecutor();
-            execAuto.schedule(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    fineRegistrazione(false);
-                }
-            }, 180, TimeUnit.SECONDS);
-        }
-        */
-
-    }
-
-    /*
-    public String getProperty(String key){
-        try{
-            if (null==this.properties){
-                this.properties = new Properties();
-                this.properties.load(context.getAssets().open(Util.PROPERTY_FILENAME));
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return this.properties.get(key).toString();
-    }
-    */
 
 
     public void fineRegistrazione(boolean avvioDaSchedulatore)
@@ -488,251 +297,10 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
                 }
                 catch(final Exception e)
                 {
-                    LogAndroid.info(TAG, "deleteRecordedFiles "+e.getMessage());
+                    LogAndroid.info(TAG, "deleteRecordedFiles "+e.getMessage() + " on " + PATH_WAVE);
                 }
             }
         }).start();
-    }
-
-    public void gestisciRegistrazione()
-    {
-        LogAndroid.info(TAG, "gestisciRegistrazione");
-        fineRegistrazione(true);
-        avviaRegistrazione(true,false);
-    }
-
-    private void writeWav(short[] da)
-    {
-
-        String shortName = pathBase + File.separator +"bas_wave"+File.separator + "SHORT-" + System.currentTimeMillis() +".txt";
-        FileWriter shortwriter = null;
-        try {
-            try {
-                shortwriter = new FileWriter(shortName, true);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            for (int i = 0; i < da.length; i++) {
-                shortwriter.write(da[i]+" ");
-            }
-            //this is the code that you change, this will make a new line between each y value in the array
-            shortwriter.close();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        byte[] data = short2byte(da);
-        FileOutputStream os = null;
-
-        pathBase = Environment.getExternalStorageDirectory()+ File.separator + "Audience";//getString(R.string.app_name);
-        inizializzaPath();
-
-        File storageDir = new File(PATH_WAVE);
-        storageDir.mkdir();
-        File outfile= null;
-        try {
-            outfile = File.createTempFile(AUDIO_RECORDER_TEMP_FILE, ".wav",storageDir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try
-        {
-            os = new FileOutputStream(outfile);
-        }
-        catch (FileNotFoundException e)
-        {
-            LogAndroid.info(TAG, "writeAudioDataToFile FileNotFoundException "+e.getMessage());
-        }
-
-        try
-        {
-            os.write(data);
-        }
-        catch (IOException e)
-        {
-            LogAndroid.info(TAG, "writeAudioDataToFile IOException1 "+e.getMessage());
-        }
-        FILE_WAVE = PATH_WAVE + System.currentTimeMillis() + ".wav";
-
-        copyWaveFile(outfile.getPath(), FILE_WAVE);
-
-        float normalizingValue = Short.MAX_VALUE;
-
-        /*
-        try {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(pathBase + File.separator +"bas_wave"+File.separator +"MyFile_"+count+".txt", true);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            float normalizeAudioData[] = new float[data.length];
-            for (int i = 0; i < data.length; i++) {
-                    normalizeAudioData[i] = data[i] / normalizingValue;
-                    writer.write(normalizeAudioData[i]+" ");
-                }
-                //this is the code that you change, this will make a new line between each y value in the array
-            writer.close();
-            count++;
-            } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-         */
-
-    }
-
-    private byte[] short2byte(short[] sData) {
-        int shortArrsize = sData.length;
-        byte[] bytes = new byte[shortArrsize * 2];
-        for (int i = 0; i < shortArrsize; i++) {
-            bytes[i * 2] = (byte) (sData[i] & 0x00FF);
-            bytes[(i * 2) + 1] = (byte) (sData[i] >> 8);
-            sData[i] = 0;
-        }
-        return bytes;
-
-    }
-
-    private void writeAudioDataToFile()
-    {
-        byte data[] = new byte[bufferSize];
-        FileOutputStream os = null;
-        try
-        {
-            os = new FileOutputStream(FILE_TEMP);
-        }
-        catch (FileNotFoundException e)
-        {
-            LogAndroid.info(TAG, "writeAudioDataToFile FileNotFoundException "+e.getMessage());
-        }
-
-        int read = 0;
-
-        if (null != os)
-        {
-            while (isRecording)
-            {
-                read = recorder.read(data, 0, bufferSize);
-                if (AudioRecord.ERROR_INVALID_OPERATION != read)
-                {
-                    try
-                    {
-                        os.write(data);
-                    }
-                    catch (IOException e)
-                    {
-                        LogAndroid.info(TAG, "writeAudioDataToFile IOException1 "+e.getMessage());
-                    }
-                }
-            }
-
-            try
-            {
-                os.close();
-            }
-            catch (IOException e)
-            {
-                LogAndroid.info(TAG, "writeAudioDataToFile IOException2 "+e.getMessage());
-            }
-        }
-    }
-
-    private void copyWaveFile(String inFilename, String outFilename)
-    {
-        //LogAndroid.info(TAG, "copyWaveFile");
-        FileInputStream in = null;
-        FileOutputStream out = null;
-        long totalAudioLen = 0;
-        long totalDataLen = totalAudioLen + 36;
-        long longSampleRate = RECORDER_SAMPLERATE;
-        int channels = 1;
-        long byteRate = RECORDER_BPP * RECORDER_SAMPLERATE * channels / 8;
-        byte[] data = new byte[bufferSize];
-        audioData = new byte[bufferSize];
-        try
-        {
-            in = new FileInputStream(inFilename);
-            out = new FileOutputStream(outFilename);
-            totalAudioLen = in.getChannel().size();
-            totalDataLen = totalAudioLen + 36;
-
-            WriteWaveFileHeader(out, totalAudioLen, totalDataLen, longSampleRate, channels, byteRate);
-
-            while (in.read(data) != -1)
-            {
-                out.write(data);
-            }
-
-
-            in.close();
-            out.close();
-
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private void WriteWaveFileHeader(FileOutputStream out, long totalAudioLen, long totalDataLen, long longSampleRate, int channels, long byteRate) throws IOException
-    {
-
-        byte[] header = new byte[44];
-
-        header[0] = 'R'; // RIFF/WAVE header
-        header[1] = 'I';
-        header[2] = 'F';
-        header[3] = 'F';
-        header[4] = (byte) (totalDataLen & 0xff);
-        header[5] = (byte) ((totalDataLen >> 8) & 0xff);
-        header[6] = (byte) ((totalDataLen >> 16) & 0xff);
-        header[7] = (byte) ((totalDataLen >> 24) & 0xff);
-        header[8] = 'W';
-        header[9] = 'A';
-        header[10] = 'V';
-        header[11] = 'E';
-        header[12] = 'f'; // 'fmt ' chunk
-        header[13] = 'm';
-        header[14] = 't';
-        header[15] = ' ';
-        header[16] = 16; // 4 bytes: size of 'fmt ' chunk
-        header[17] = 0;
-        header[18] = 0;
-        header[19] = 0;
-        header[20] = 1; // format = 1
-        header[21] = 0;
-        header[22] = (byte) channels;
-        header[23] = 0;
-        header[24] = (byte) (longSampleRate & 0xff);
-        header[25] = (byte) ((longSampleRate >> 8) & 0xff);
-        header[26] = (byte) ((longSampleRate >> 16) & 0xff);
-        header[27] = (byte) ((longSampleRate >> 24) & 0xff);
-        header[28] = (byte) (byteRate & 0xff);
-        header[29] = (byte) ((byteRate >> 8) & 0xff);
-        header[30] = (byte) ((byteRate >> 16) & 0xff);
-        header[31] = (byte) ((byteRate >> 24) & 0xff);
-        header[32] = (byte) (2 * 16 / 8); // block align
-        header[33] = 0;
-        header[34] = RECORDER_BPP; // bits per sample
-        header[35] = 0;
-        header[36] = 'd';
-        header[37] = 'a';
-        header[38] = 't';
-        header[39] = 'a';
-        header[40] = (byte) (totalAudioLen & 0xff);
-        header[41] = (byte) ((totalAudioLen >> 8) & 0xff);
-        header[42] = (byte) ((totalAudioLen >> 16) & 0xff);
-        header[43] = (byte) ((totalAudioLen >> 24) & 0xff);
-
-        out.write(header, 0, 44);
     }
 
     public void didFinishListening()

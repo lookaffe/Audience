@@ -26,15 +26,9 @@
 
 package edu.gvsu.masl.echoprint;
 
-import android.os.Environment;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Time;
-
-
-import basfp.it.bas3.support.LogAndroid;
+import android.content.Context;
+import android.view.Gravity;
+import android.widget.Toast;
 
 /**
  * Codegen class<br>
@@ -46,15 +40,14 @@ import basfp.it.bas3.support.LogAndroid;
 public class Codegen 
 {
 	private final float normalizingValue = Short.MAX_VALUE;
-	String pathBase = Environment.getExternalStorageDirectory()+ File.separator + "Audience";//getString(R.string.app_name);
-	private static final String AUDIO_RECORDER_TEMP_FILE = "rec_temp";
+	private Context context;
 
 	native String codegen(float data[], int numSamples);
-	
-	static 
+
+	static
 	{
 			System.loadLibrary("echoprint-jni");
-    }
+	}
 	
 	/**
 	 * Invoke the echoprint native library and generate the fingerprint code.<br>

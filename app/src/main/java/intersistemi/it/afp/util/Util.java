@@ -1,12 +1,10 @@
 package intersistemi.it.afp.util;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.view.menu.MenuView;
 import android.widget.Button;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.text.DateFormat;
@@ -15,11 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
-
-import basfp.it.bas3.support.HttpRequest;
-import basfp.it.bas3.support.LogAndroid;
-import intersistemi.it.afp.R;
-import intersistemi.it.afp.activity.MainActivity;
 
 /**
  * Created by fnardi on 13/03/2017.
@@ -33,7 +26,6 @@ public class Util
     public static final String UPLOAD_SERVER_URL_PROPERTY = "UPLOAD_SERVER_URL";
     private static final String PROPERTY_FILENAME = "appascolto.properties";
     private static Util instance= null;
-
     private Properties properties;
 
 
@@ -44,11 +36,21 @@ public class Util
         return instance;
     }
 
-
-    public String getRandommIdRegistrazione()
+    public void switchButton(boolean stato,MenuView.ItemView item)
     {
-        SecureRandom random = new SecureRandom();
-        return new BigInteger(130, random).toString(32);
+        item.setEnabled(stato);
+    }
+
+    public String getProperty(Context context, String key){
+        try{
+            if (null==this.properties){
+                this.properties = new Properties();
+                this.properties.load(context.getAssets().open(PROPERTY_FILENAME));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return this.properties.get(key).toString();
     }
 
     public String getCurrectTimestamp()
@@ -57,27 +59,13 @@ public class Util
         return sdf.format(new Date()).toString();
     }
 
-    public String myUploaFP(String Url, String filename,String TAG) throws Exception
+    public String getRandommIdRegistrazione()
     {
-        String result = "";
-        LogAndroid.info(TAG, "--------------- START --------------------\n");
-        File e = new File(filename);
-        if(!e.exists()) {
-            LogAndroid.info(TAG, "FILE NOT FOUND :" + filename);
-        }
-        else
-        {
-            LogAndroid.info(TAG, "UPLOAD FILE IN CORSO " + filename);
-            HttpRequest request = HttpRequest.post(Url).contentType("application/x-www-form-urlencoded").connectTimeout('\uea60').disconnect();
-            request.part("file", filename, e);
-            request.part("name", filename, e.getName());
-            LogAndroid.info(TAG, "HTTP " + request.message());
-            result = request.body();
-        }
-        return result;
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
     }
 
-        public String ritornaOraDaMillisecondi(long millis)
+    public String ritornaOraDaMillisecondi(long millis)
         {
             Date date = new Date(millis);
             DateFormat formatter = new SimpleDateFormat("HH:mm");
@@ -143,25 +131,6 @@ public class Util
             calendar.add(Calendar.DAY_OF_YEAR, 1);
         }*/
         return ""+calendar.getTimeInMillis();
-    }
-
-
-    public void switchButton(boolean stato,MenuView.ItemView item)
-    {
-        item.setEnabled(stato);
-    }
-
-
-    public String getProperty(Context context, String key){
-        try{
-            if (null==this.properties){
-                this.properties = new Properties();
-                this.properties.load(context.getAssets().open(PROPERTY_FILENAME));
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return this.properties.get(key).toString();
     }
 
 }

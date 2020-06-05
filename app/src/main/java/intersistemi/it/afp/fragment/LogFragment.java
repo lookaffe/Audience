@@ -1,25 +1,16 @@
 package intersistemi.it.afp.fragment;
 
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import basfp.it.bas3.support.LogAndroid;
 import intersistemi.it.afp.R;
@@ -40,6 +31,7 @@ public class LogFragment extends Fragment
     private TextView textView;
     private StringBuilder text = new StringBuilder();
     private String pathBase = "";
+    private static String EXT_PATH, INT_PATH;
 
     public LogFragment()
     {
@@ -87,7 +79,11 @@ public class LogFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         final View ll = inflater.inflate(R.layout.fragment_log, container, false);
-        pathBase= Environment.getExternalStorageDirectory().getPath() + File.separator + getString(R.string.app_name);
+        EXT_PATH = getArguments().getString("ext_path");
+        INT_PATH = getArguments().getString("int_path");
+        LogAndroid.info("LogFragment EXT_PAth", EXT_PATH);
+        LogAndroid.info("LogFragment INT_PAth", INT_PATH);
+        pathBase= EXT_PATH + File.separator + getString(R.string.app_name);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

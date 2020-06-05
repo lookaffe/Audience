@@ -1,17 +1,13 @@
 package intersistemi.it.afp.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioRecord;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,28 +18,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Properties;
 
 import basfp.it.bas3.support.LogAndroid;
 import intersistemi.it.afp.BuildConfig;
-import intersistemi.it.afp.fragment.ClockFragment;
+import intersistemi.it.afp.R;
 import intersistemi.it.afp.fragment.FingerFragment;
 import intersistemi.it.afp.fragment.HomeFragment;
 import intersistemi.it.afp.fragment.LogFragment;
-import intersistemi.it.afp.fragment.SettingsFragment;
-import intersistemi.it.afp.R;
 import intersistemi.it.afp.util.Util;
 
 public class MainActivity extends AppCompatActivity
@@ -53,14 +43,15 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction ft;
     Fragment fragmentHome=null;
     Fragment fragmentFinger=null;
-    Fragment fragmentSettings=null;
-    Fragment fragmentClock=null;
     Fragment fragmentLog=null;
     private Util util;
     private static Context mContext;
-    private MainActivity mainActivity;
     private final int MY_PERMISSIONS_REQUEST = 1;
-    private ProgressDialog dialog;
+
+    public static final String EXT_PATH = Environment.getExternalStorageDirectory().getPath();
+
+    public static String INT_PATH = "";//getFilesDir().getPath();
+    private static String USER_NAME;
 
     // Menù bottom di navigazione all'interno del MainActivity
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -87,22 +78,8 @@ public class MainActivity extends AppCompatActivity
 
     };
 
-    private ProgressBar progressBar;
-
-    public Fragment getFragmentHome() {
-        return fragmentHome;
-    }
-
-    public FragmentManager getFm() {
-        return fm;
-    }
-
-    public FragmentTransaction getFt() {
-        return ft;
-    }
-
-
     // metodo per mostrare il fragment voluto
+    @SuppressLint("RestrictedApi")
     private void mostraFragment(Fragment fShow){
         ft = fm.beginTransaction();
         for(Fragment f:fm.getFragments())
@@ -111,43 +88,23 @@ public class MainActivity extends AppCompatActivity
                 ft.show(f);
             else
                 ft.hide(f);
-
         }
         ft.commit();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
-        // getSupportFragmentManager().putFragment(outState, "fragmentHome", fragmentHome);
         super.onSaveInstanceState(outState);
-    }
-
-    public int getValidSampleRates() {
-        int r=8000;
-        for (int rate : new int[] {8000,11025,16000,22050,44100}) {  // add the rates you wish to check against
-            int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO , AudioFormat.ENCODING_PCM_16BIT);
-            if (bufferSize > 0) {
-                r= rate;
-            }
-        }
-        return r;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // To get preferred buffer size and sampling rate.
-        AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        String rate = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
-        String size = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
-        Log.d("sample rate", "Size :" + size + " - Rate :" + rate);
-
         //Questi settagaggi servono per abilitare i permessi di rete verso l'esterno.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+        LogAndroid.info("getFilesDir ", getFilesDir().getPath());
         setContentView(R.layout.activity_main);
         controllaPermessi(); // pop up di accettazione dei permessi
 
@@ -155,13 +112,16 @@ public class MainActivity extends AppCompatActivity
 
         // inizializza i fragment
         fragmentFinger = FingerFragment.newInstance();
-        //fragmentSettings =new SettingsFragment();
-        //fragmentClock= new ClockFragment();
         fragmentLog=new LogFragment();
         fragmentHome=new HomeFragment();
-        progressBar = new ProgressBar(mContext);
 
-
+        Bundle bundle = new Bundle();
+        bundle.putString("ext_path", EXT_PATH);
+        bundle.putString("int_path", INT_PATH);
+        // set Fragmentclass Arguments
+        fragmentFinger.setArguments(bundle);
+        fragmentLog.setArguments(bundle);
+        fragmentHome.setArguments(bundle);
 
 
         //(Spinner) findViewById(R.id.progressBar);
@@ -181,16 +141,15 @@ public class MainActivity extends AppCompatActivity
         ft.hide(fragmentLog);
         ft.commit();
 
-        //fragmentClock.setMenuVisibility(false);
-        //fragmentSettings.setMenuVisibility(false);
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
         util.switchButton(false,(MenuView.ItemView)findViewById(R.id.navigation_finger));
-        //util.switchButton(false,(MenuView.ItemView)findViewById(R.id.navigation_clock));
         util.switchButton(false,(MenuView.ItemView)findViewById(R.id.navigation_logs));
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        LogAndroid.info("MainActivity EXT PATH", EXT_PATH);
+        LogAndroid.info("MainActivity INT PATH", INT_PATH);
     }
 
     // genera il menù in alto a destra
@@ -207,12 +166,10 @@ public class MainActivity extends AppCompatActivity
         try{
             properties.load(this.getAssets().open("appascolto.properties"));
             res =  properties.get(key).toString();
-            //System.out.println("SERVER_URL: "+properties.get("SERVER_URL"));
         }catch(Exception e){
             res="ERROR";
             e.printStackTrace();
         }
-
         return res;
     }
 
@@ -225,9 +182,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId(); // id dell'item del menù premuto
 
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_logoff || id == R.id.action_quit) {
-
         FingerFragment fff = (FingerFragment) fragmentFinger; // dichiaro il fragment che mi gestisce il login
         fff.getBtnFine().performClick(); //Fermo l'handler che gestisce il processo automatico temporizzato di analisi audio ed invio dati.
 
@@ -237,7 +191,7 @@ public class MainActivity extends AppCompatActivity
         rl.addView(View.inflate(this, R.layout.fragment_home, null)); // aggiungi la vista con il layout di login
 
         TextView bn =(TextView) findViewById(R.id.build_number);
-        bn.setText("Build no. : "+ BuildConfig.VERSION_NAME+"\nContatti: infoaudience@csa.intersistemi.it");
+        bn.setText("Build no. : "+ BuildConfig.VERSION_NAME+"\nContatti: infoaudience@csaresearch.it/");
 
         HomeFragment f = (HomeFragment) getSupportFragmentManager().findFragmentByTag("fragmentHomeTAG");
         f.logged = false;
@@ -268,8 +222,6 @@ public class MainActivity extends AppCompatActivity
             MainActivity.this.finish();
             System.exit(0);
         }
-        //return true;
-        //}
         return super.onOptionsItemSelected(item);
     }
 
@@ -278,11 +230,9 @@ public class MainActivity extends AppCompatActivity
     {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
             {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -292,6 +242,7 @@ public class MainActivity extends AppCompatActivity
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this, new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_NETWORK_STATE,
                         Manifest.permission.INTERNET}, MY_PERMISSIONS_REQUEST);
@@ -300,8 +251,6 @@ public class MainActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-
-
     }
 
     // gestisce il risultato dell'accettazione dei permessi
@@ -320,7 +269,6 @@ public class MainActivity extends AppCompatActivity
                 else
                 {
                     LogAndroid.info(Util.TAG,"permessi negati");
-                   // System.exit(0);
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
@@ -329,8 +277,6 @@ public class MainActivity extends AppCompatActivity
             // other 'case' lines to check for other
             // permissions this app might request
         }
-
-
     }
 
     //Need to override to prevent logging out after Android back button is pressed.
@@ -339,4 +285,13 @@ public class MainActivity extends AppCompatActivity
         //Need to override to prevent logging out after Android back button is pressed.
         //Nothing to do here.
     }
+
+    public void setUser(String name){
+        this.USER_NAME = name;
+    }
+
+    public String getUserName(){
+        return this.USER_NAME;
+    }
+
 }
