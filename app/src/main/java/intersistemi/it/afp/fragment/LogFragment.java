@@ -14,8 +14,6 @@ import java.io.IOException;
 
 import basfp.it.bas3.support.LogAndroid;
 import intersistemi.it.afp.R;
-import intersistemi.it.afp.util.Util;
-
 
 public class LogFragment extends Fragment
 {

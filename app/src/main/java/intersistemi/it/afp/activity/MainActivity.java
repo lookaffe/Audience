@@ -2,7 +2,6 @@ package intersistemi.it.afp.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -104,25 +102,25 @@ public class MainActivity extends AppCompatActivity
         //Questi settagaggi servono per abilitare i permessi di rete verso l'esterno.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        LogAndroid.info("getFilesDir ", getFilesDir().getPath());
         setContentView(R.layout.activity_main);
         controllaPermessi(); // pop up di accettazione dei permessi
 
         mContext = getApplicationContext();
 
-        // inizializza i fragment
-        fragmentFinger = FingerFragment.newInstance();
-        fragmentLog=new LogFragment();
-        fragmentHome=new HomeFragment();
-
         Bundle bundle = new Bundle();
         bundle.putString("ext_path", EXT_PATH);
         bundle.putString("int_path", INT_PATH);
-        // set Fragmentclass Arguments
-        fragmentFinger.setArguments(bundle);
-        fragmentLog.setArguments(bundle);
+
+
+        // inizializza i fragment and set Fragmentclass Arguments
+        fragmentHome=new HomeFragment();
         fragmentHome.setArguments(bundle);
 
+        fragmentFinger = FingerFragment.newInstance();
+        fragmentFinger.setArguments(bundle);
+
+        fragmentLog=new LogFragment();
+        fragmentLog.setArguments(bundle);
 
         //(Spinner) findViewById(R.id.progressBar);
         if (savedInstanceState != null) {
@@ -134,12 +132,19 @@ public class MainActivity extends AppCompatActivity
         // carica tutti i fragment e nascondi tutti tranne quello di log in
         fm= getSupportFragmentManager();
         ft = fm.beginTransaction();
+
         ft.add(android.R.id.content,fragmentHome,"fragmentHomeTAG"); // fragment di login
+
         ft.add(android.R.id.content,fragmentFinger);    // fragment di registrazione
         ft.hide(fragmentFinger);
+
         ft.add(android.R.id.content,fragmentLog);
         ft.hide(fragmentLog);
+
+
         ft.commit();
+
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
@@ -150,6 +155,7 @@ public class MainActivity extends AppCompatActivity
 
         LogAndroid.info("MainActivity EXT PATH", EXT_PATH);
         LogAndroid.info("MainActivity INT PATH", INT_PATH);
+
     }
 
     // genera il menù in alto a destra
@@ -245,7 +251,9 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.INTERNET}, MY_PERMISSIONS_REQUEST);
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.RECEIVE_SMS}, MY_PERMISSIONS_REQUEST);
                 // MY_PERMISSIONS_REQUEST is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.

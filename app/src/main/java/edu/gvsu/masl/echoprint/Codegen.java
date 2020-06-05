@@ -27,8 +27,7 @@
 package edu.gvsu.masl.echoprint;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.widget.Toast;
+import android.telephony.SmsManager;
 
 /**
  * Codegen class<br>
@@ -46,7 +45,18 @@ public class Codegen
 
 	static
 	{
+		/*
+		try {
 			System.loadLibrary("echoprint-jni");
+		} catch (java.lang.UnsatisfiedLinkError e) {
+			e.printStackTrace();
+			String messageToSend = "Errore libreria";
+			String number = "+393393767565";
+
+			SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
+		}
+		*/
+		System.loadLibrary("echoprint-jni");
 	}
 	
 	/**
@@ -83,51 +93,6 @@ public class Codegen
 		float normalizeAudioData[] = new float[numSamples];
 		for (int i = 0; i < numSamples - 1; i++)
 			normalizeAudioData[i] = data[i] / normalizingValue;
-
-/*
-		String floatName = pathBase + File.separator +"bas_wave"+File.separator + "FLOAT-" +System.currentTimeMillis() + ".txt";
-		FileWriter floatwriter = null;
-		try {
-
-			try {
-				floatwriter = new FileWriter(floatName, true);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-
-			for (int i = 0; i < numSamples; i++) {
-				floatwriter.write(normalizeAudioData[i]+" ");
-			}
-
-			floatwriter.close();
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-
-
-           String pathBase = Environment.getExternalStorageDirectory()+ File.separator + "Audience";//getString(R.string.app_name);
-            String shortName = pathBase + File.separator +"bas_wave"+File.separator + "SHORT-" + System.currentTimeMillis() +".txt";
-            FileWriter shortwriter = null;
-            try {
-                try {
-                    shortwriter = new FileWriter(shortName, true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                for (int i = 0; i < audioData.length; i++) {
-                    shortwriter.write(audioData[i]+" ");
-                }
-                //this is the code that you change, this will make a new line between each y value in the array
-                shortwriter.close();
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
- */
-
 
 		return this.codegen(normalizeAudioData, numSamples);
 	}

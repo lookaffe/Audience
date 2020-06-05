@@ -28,73 +28,79 @@
 16    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 16-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:5-80
 16-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:22-78
-17
-18    <application
-18-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:5-41:19
-19        android:allowBackup="true"
-19-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:12:9-35
-20        android:debuggable="true"
-21        android:icon="@mipmap/ic_launcher_finger"
-21-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:13:9-50
-22        android:label="@string/app_name"
-22-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:14:9-41
-23        android:roundIcon="@mipmap/ic_launcher_finger"
-23-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:15:9-55
-24        android:supportsRtl="true"
-24-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:16:9-35
-25        android:theme="@style/AppTheme" >
-25-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:17:9-40
-26        <activity
-26-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:18:9-26:20
-27            android:name="intersistemi.it.afp.activity.MainActivity"
-27-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:19:13-50
-28            android:label="@string/app_name"
-28-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:20:13-45
-29            android:screenOrientation="portrait" >
-29-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:21:13-49
-30            <intent-filter>
-30-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:22:13-25:29
-31                <action android:name="android.intent.action.MAIN" />
-31-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:17-68
-31-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:25-66
-32
-33                <category android:name="android.intent.category.LAUNCHER" />
-33-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:17-76
-33-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:27-74
-34            </intent-filter>
-35        </activity>
-36
-37        <receiver
-37-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:9-109
-38            android:name="bas3.it.basfp.broadcast.AlarmReceiverBroadcast"
-38-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:19-80
-39            android:process=":remote" />
-39-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:81-106
-40        <receiver android:name="bas3.it.basfp.broadcast.AlarmBootReceiverBroadcast" >
-40-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:9-35:20
-40-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:19-84
-41            <intent-filter>
-41-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:13-34:29
-42                <action android:name="android.intent.action.BOOT_COMPLETED" />
-42-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:17-79
-42-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:25-76
-43                <action android:name="android.intent.action.MAIN" />
-43-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:17-68
-43-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:25-66
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-45-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:17-76
-45-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:27-74
-46            </intent-filter>
-47        </receiver>
-48
-49        <service
-49-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:37:9-40:19
-50            android:name="bas3.it.basfp.FingerPrint"
-50-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:38:13-53
-51            android:exported="false" >
-51-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:39:13-37
-52        </service>
-53    </application>
-54
-55</manifest>
+17    <uses-permission android:name="android.permission.SEND_SMS" />
+17-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:10:5-66
+17-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:10:22-64
+18    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+18-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:5-69
+18-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:22-67
+19
+20    <application
+20-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:13:5-43:19
+21        android:allowBackup="true"
+21-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:14:9-35
+22        android:debuggable="true"
+23        android:icon="@mipmap/ic_launcher_finger"
+23-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:15:9-50
+24        android:label="@string/app_name"
+24-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:16:9-41
+25        android:roundIcon="@mipmap/ic_launcher_finger"
+25-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:17:9-55
+26        android:supportsRtl="true"
+26-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:18:9-35
+27        android:theme="@style/AppTheme" >
+27-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:19:9-40
+28        <activity
+28-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:20:9-28:20
+29            android:name="intersistemi.it.afp.activity.MainActivity"
+29-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:21:13-50
+30            android:label="@string/app_name"
+30-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:22:13-45
+31            android:screenOrientation="portrait" >
+31-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:13-49
+32            <intent-filter>
+32-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:13-27:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:17-68
+33-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:17-76
+35-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:27-74
+36            </intent-filter>
+37        </activity>
+38
+39        <receiver
+39-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:9-109
+40            android:name="bas3.it.basfp.broadcast.AlarmReceiverBroadcast"
+40-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:19-80
+41            android:process=":remote" />
+41-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:81-106
+42        <receiver android:name="bas3.it.basfp.broadcast.AlarmBootReceiverBroadcast" >
+42-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:9-37:20
+42-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:19-84
+43            <intent-filter>
+43-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:32:13-36:29
+44                <action android:name="android.intent.action.BOOT_COMPLETED" />
+44-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:33:17-79
+44-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:33:25-76
+45                <action android:name="android.intent.action.MAIN" />
+45-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:17-68
+45-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:25-66
+46
+47                <category android:name="android.intent.category.LAUNCHER" />
+47-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:17-76
+47-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:27-74
+48            </intent-filter>
+49        </receiver>
+50
+51        <service
+51-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:39:9-42:19
+52            android:name="bas3.it.basfp.FingerPrint"
+52-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:40:13-53
+53            android:exported="false" >
+53-->C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:41:13-37
+54        </service>
+55    </application>
+56
+57</manifest>

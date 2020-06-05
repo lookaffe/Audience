@@ -1,23 +1,15 @@
 package intersistemi.it.afp.fragment;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.view.menu.MenuView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.GridLayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -28,13 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Time;
-import java.util.Properties;
-import java.util.concurrent.TimeoutException;
 
 import basfp.it.bas3.support.HttpRequest;
 import basfp.it.bas3.support.LogAndroid;
@@ -42,8 +28,6 @@ import intersistemi.it.afp.BuildConfig;
 import intersistemi.it.afp.R;
 import intersistemi.it.afp.activity.MainActivity;
 import intersistemi.it.afp.util.Util;
-
-import static android.content.Intent.getIntent;
 
 
 public class HomeFragment extends Fragment
