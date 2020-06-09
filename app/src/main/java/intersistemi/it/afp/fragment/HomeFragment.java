@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment
     private ProgressDialog dialog;
     private TextView userLogged;
     private Util util;
-    private String pathBase, EXT_PATH, INT_PATH, PATH_TEMP;
+    private String pathBase, LOG_PATH, PATH_TEMP;
 
 
 
@@ -79,11 +79,8 @@ public class HomeFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
     {
-        EXT_PATH = getArguments().getString("ext_path");
-        INT_PATH = getArguments().getString("int_path");
-        LogAndroid.info("HomeFragment EXT_PAth", EXT_PATH);
-        LogAndroid.info("HomeFragment INT_PAth", INT_PATH);
-        pathBase= EXT_PATH + File.separator + getString(R.string.app_name);
+        LOG_PATH = getArguments().getString("log_path");
+        pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
         Toast mess2 = Toast.makeText(getActivity(), pathBase, Toast.LENGTH_SHORT);
         mess2.setGravity(Gravity.CENTER, 0, 0);
         mess2.show();
@@ -129,12 +126,12 @@ public class HomeFragment extends Fragment
                     new LoginTask().execute(result.toString());
 
 
-                }catch(Exception te){
+                }catch(final Exception te){
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast mess = Toast.makeText(getActivity(),"Errore di connessione al server di login. Ricontrollare i parametri di rete e riprovare più tardi, grazie.", Toast.LENGTH_SHORT);
+                            Toast mess = Toast.makeText(getActivity(),"Errore di connessione al server di login. Ricontrollare i parametri di rete e riprovare più tardi, grazie." + te, Toast.LENGTH_SHORT);
                             mess.setGravity(Gravity.CENTER,0,0);
                             mess.show();
                         }});

@@ -45,17 +45,6 @@ public class Codegen
 
 	static
 	{
-		/*
-		try {
-			System.loadLibrary("echoprint-jni");
-		} catch (java.lang.UnsatisfiedLinkError e) {
-			e.printStackTrace();
-			String messageToSend = "Errore libreria";
-			String number = "+393393767565";
-
-			SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
-		}
-		*/
 		System.loadLibrary("echoprint-jni");
 	}
 	

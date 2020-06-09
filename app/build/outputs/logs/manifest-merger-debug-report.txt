@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
 MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:2:1-17:12
 MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:17:1-27:12
 MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85805c30bd68ab0df5d6d5be81fe5bc3\appcompat-v7-25.2.0\AndroidManifest.xml:17:1-27:12
@@ -17,20 +17,20 @@ MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\looke\.gr
 MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\85b7bb16987172ff0550acd1b17e83cc\support-core-utils-25.2.0\AndroidManifest.xml:17:1-27:12
 MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\e17cf8b200a072d218fb5889b0c560ad\support-core-ui-25.2.0\AndroidManifest.xml:17:1-27:12
 MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:17:1-27:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
 	package
 		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:70-99
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:1-44:12
 		INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:2:11-69
@@ -58,16 +58,8 @@ uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
 ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:5-80
 	android:name
 		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:9:22-78
-uses-permission#android.permission.SEND_SMS
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:10:5-66
-	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:10:22-64
-uses-permission#android.permission.RECEIVE_SMS
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:5-69
-	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:22-67
 application
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:13:5-43:19
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:11:5-41:19
 MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:11:5-15:19
 MERGED from [:fp-release:] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\b82a8cc4f6182fdd84abdbac419ec687\fp-release\AndroidManifest.xml:11:5-15:19
 MERGED from [com.android.support:design:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\481f6dd1f753e425581479b9921ce29b\design-25.2.0\AndroidManifest.xml:25:5-20
@@ -93,57 +85,57 @@ MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\looke\.gradle\
 MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-compat:25.2.0] C:\Users\looke\.gradle\caches\transforms-2\files-2.1\faf82acb9880cd88ab3991b43c74b821\support-compat-25.2.0\AndroidManifest.xml:25:5-20
 	android:supportsRtl
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:18:9-35
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:16:9-35
 	android:label
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:16:9-41
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:14:9-41
 	android:roundIcon
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:17:9-55
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:15:9-55
 	android:icon
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:15:9-50
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:13:9-50
 	android:allowBackup
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:14:9-35
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:12:9-35
 	android:theme
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:19:9-40
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:17:9-40
 activity#intersistemi.it.afp.activity.MainActivity
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:20:9-28:20
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:18:9-26:20
 	android:screenOrientation
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:13-49
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:21:13-49
 	android:label
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:22:13-45
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:20:13-45
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:21:13-50
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:19:13-50
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:13-27:29
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:22:13-25:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:17-68
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:17-68
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:25:25-66
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:23:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:17-76
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:17-76
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:26:27-74
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:24:27-74
 receiver#bas3.it.basfp.broadcast.AlarmReceiverBroadcast
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:9-109
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:9-109
 	android:process
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:81-106
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:81-106
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:19-80
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:28:19-80
 receiver#bas3.it.basfp.broadcast.AlarmBootReceiverBroadcast
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:9-37:20
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:9-35:20
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:19-84
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:29:19-84
 intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:32:13-36:29
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:30:13-34:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:33:17-79
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:17-79
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:33:25-76
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:31:25-76
 service#bas3.it.basfp.FingerPrint
-ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:39:9-42:19
+ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:37:9-40:19
 	android:exported
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:41:13-37
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:39:13-37
 	android:name
-		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:40:13-53
+		ADDED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml:38:13-53
 uses-sdk
 INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\looke\Documents\SARA_project\Software_ascolto\src\android_app\appascolto\app\src\main\AndroidManifest.xml

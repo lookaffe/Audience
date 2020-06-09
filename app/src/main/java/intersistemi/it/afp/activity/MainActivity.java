@@ -46,9 +46,7 @@ public class MainActivity extends AppCompatActivity
     private static Context mContext;
     private final int MY_PERMISSIONS_REQUEST = 1;
 
-    public static final String EXT_PATH = Environment.getExternalStorageDirectory().getPath();
-
-    public static String INT_PATH = "";//getFilesDir().getPath();
+    public String LOG_PATH;
     private static String USER_NAME;
 
     // Menù bottom di navigazione all'interno del MainActivity
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         //Questi settagaggi servono per abilitare i permessi di rete verso l'esterno.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -107,10 +106,13 @@ public class MainActivity extends AppCompatActivity
 
         mContext = getApplicationContext();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("ext_path", EXT_PATH);
-        bundle.putString("int_path", INT_PATH);
+        if(Environment.getExternalStorageState().equals("mounted")){
+            LOG_PATH = Environment.getExternalStorageDirectory().getPath();
+        } else
+            LOG_PATH = getFilesDir().getPath();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("log_path", LOG_PATH);
 
         // inizializza i fragment and set Fragmentclass Arguments
         fragmentHome=new HomeFragment();
@@ -152,10 +154,6 @@ public class MainActivity extends AppCompatActivity
         util.switchButton(false,(MenuView.ItemView)findViewById(R.id.navigation_logs));
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        LogAndroid.info("MainActivity EXT PATH", EXT_PATH);
-        LogAndroid.info("MainActivity INT PATH", INT_PATH);
-
     }
 
     // genera il menù in alto a destra
@@ -251,9 +249,7 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.INTERNET,
-                        Manifest.permission.SEND_SMS,
-                        Manifest.permission.RECEIVE_SMS}, MY_PERMISSIONS_REQUEST);
+                        Manifest.permission.INTERNET}, MY_PERMISSIONS_REQUEST);
                 // MY_PERMISSIONS_REQUEST is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.

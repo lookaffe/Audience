@@ -29,7 +29,7 @@ public class LogFragment extends Fragment
     private TextView textView;
     private StringBuilder text = new StringBuilder();
     private String pathBase = "";
-    private static String EXT_PATH, INT_PATH;
+    private static String LOG_PATH;
 
     public LogFragment()
     {
@@ -77,11 +77,8 @@ public class LogFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         final View ll = inflater.inflate(R.layout.fragment_log, container, false);
-        EXT_PATH = getArguments().getString("ext_path");
-        INT_PATH = getArguments().getString("int_path");
-        LogAndroid.info("LogFragment EXT_PAth", EXT_PATH);
-        LogAndroid.info("LogFragment INT_PAth", INT_PATH);
-        pathBase= EXT_PATH + File.separator + getString(R.string.app_name);
+        LOG_PATH = getArguments().getString("log_path");
+        pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

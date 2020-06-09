@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import intersistemi.it.afp.util.Util;
 public class FingerFragment extends Fragment
 {
     private static final String TAG = "baslib";
-    private static String EXT_PATH, INT_PATH;
+    private static String LOG_PATH;
     private Chronometer c =null;
     private FloatingActionButton btnAvvia = null; // tasto avvia registrazione
     private FloatingActionButton btnFine=null; // tasto stop registrazione
@@ -70,12 +71,9 @@ public class FingerFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
-        EXT_PATH = getArguments().getString("ext_path");
-        INT_PATH = getArguments().getString("int_path");
-        LogAndroid.info("FingerFragment EXT_PAth", EXT_PATH);
-        LogAndroid.info("FingerFragment INT_PAth", INT_PATH);
+        LOG_PATH = getArguments().getString("log_path");
         View ll = inflater.inflate(R.layout.fragment_finger, container, false);
-        String pathBase= EXT_PATH + File.separator + getString(R.string.app_name);
+        String pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
         riconoscimento= new FingerPrint(this.getActivity(),pathBase,1,true);
         c = (Chronometer) ll.findViewById(R.id.chronometer);
 
@@ -135,7 +133,7 @@ public class FingerFragment extends Fragment
                 try {
                     recordingHandler.removeCallbacks(runnableRecordingTask);
                     riconoscimento.stopRec();
-                    //riconoscimento.writeApplicationLog(optime);
+                    riconoscimento.writeApplicationLog(optime);
                     //riconoscimento.deleteRecordedFiles();
 
                     Toast mess = Toast.makeText(getActivity(), "Chiusura della sessione di ascolto in corso... Grazie!", Toast.LENGTH_SHORT);

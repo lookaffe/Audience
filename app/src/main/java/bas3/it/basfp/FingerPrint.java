@@ -63,7 +63,6 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     private static final String DIR_FP = "/bas_fp/";
     private static final String DIR_WAVE = "/bas_wave/";
     private static final String DIR_TEMP = "/bas_temp/";
-    private static final String FILE_USER = "user.txt";
     private static final String SERVER_NOT_FOUND_TITLE = "Server non raggiungibile";
     private static final String SERVER_NOT_FOUND_BODY = "Il server non risulta essere raggiungibile. Ricontrollare la connessione di rete e riprovare, grazie.";
     private String PATH_FP, FILE_FP,PATH_WAVE,FILE_WAVE,PATH_TEMP;
@@ -111,6 +110,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         this.activity=activity;
         this.minSplitFile=minSplitFile;
         this.pathBase=pathBase;
+        inizializzaPath();
         this.makeToast=makeToast;
         context=activity.getApplicationContext();
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
@@ -211,9 +211,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
 
     private void inizializzaPath()
     {
-        PATH_WAVE=pathBase+DIR_WAVE;
-        LogAndroid.info("path per wave", PATH_WAVE);
-        File app1= new File(PATH_WAVE);
+        File app1= new File(pathBase);
         if(!app1.exists())
             app1.mkdirs();
     }
