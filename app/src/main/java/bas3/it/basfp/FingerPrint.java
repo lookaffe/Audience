@@ -16,6 +16,7 @@ import android.provider.Settings.Secure;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -139,36 +140,38 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         // fingerprinting the audio file
         if(fingerprinter == null)
             fingerprinter = new AudioFingerprinter(FingerPrint.this);
+        //android.util.Log.d("FINGERPRINT IS RUNNING",Boolean.toString(fingerprinter.isItRunning()));
 
         String codefp = fingerprinter.getCode();
         short[] audio = fingerprinter.getAudioData();
+        if(!fingerprinter.isItRunning()) {
+            fingerprinter.fingerprint(20, false);
+        }
 
-        fingerprinter.fingerprint(20, false);
-
-        if(codefp!=null && codefp!=precodefp){ //questo if serve per controllare che ci sia una fingerprint da spedire e sia diversa dalla precedente. Può essere sostituito con un corretto controllo sui thread
+        if (codefp != null && codefp != precodefp) { //questo if serve per controllare che ci sia una fingerprint da spedire e sia diversa dalla precedente. Può essere sostituito con un corretto controllo sui thread
             //manda fp
-            ByteString bs=ByteString.copyFrom(codefp, "UTF-8");
+            ByteString bs = ByteString.copyFrom(codefp, "UTF-8");
 
             acb.setData(bs); //invia il file audio
             //nuovi campi per invio info utente
 
             //spedisce i dati al server
-            LogAndroid.info("USER",user_name);
+            LogAndroid.info("USER", user_name);
             acb.setUsername(user_name);
             acb.setDatainvio(System.currentTimeMillis());
             acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
             acb.setPassword("user_password");
 
-            byte[] message =  acb.build().toByteArray();
-            String urlstr = Util.getInstance().getProperty(context,Util.UPLOAD_SERVER_URL_PROPERTY);
+            byte[] message = acb.build().toByteArray();
+            String urlstr = Util.getInstance().getProperty(context, Util.UPLOAD_SERVER_URL_PROPERTY);
             HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
             request.send(message);
             String result = request.body();
 
-            precodefp=codefp;
+            precodefp = codefp;
         }
 
-        if(audio != null && audio!=preaudio) {
+        if (audio != null && audio != preaudio) {
             //writeWav(audio);
             preaudio = audio;
         }

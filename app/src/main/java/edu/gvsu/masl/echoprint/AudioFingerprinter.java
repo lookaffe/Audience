@@ -126,6 +126,7 @@ public class AudioFingerprinter implements Runnable
 		
 		// start the recording thread
 		thread = new Thread(this);
+		android.util.Log.d("HANDLER", "startato");
 		thread.start();
 	}
 	
@@ -150,6 +151,10 @@ public class AudioFingerprinter implements Runnable
 	{
 		//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
 		return audioDataCopy;
+	}
+
+	public boolean isItRunning(){
+		return this.isRunning;
 	}
 
 	/**
@@ -207,53 +212,15 @@ public class AudioFingerprinter implements Runnable
 					if(mRecordInstance.getRecordingState() == AudioRecord.RECORDSTATE_STOPPED || (!firstRun && !this.continuous))
 						break;
 
-					// prova per creare fp da file già presente
-					/*
-					File fileIn = new File("Rai1_0.wav");
-					int totalFramesRead = 0;
-					try {
-						AudioInputStream audioInputStream =	AudioSystem.getAudioInputStream(fileIn);
-						int bytesPerFrame =	audioInputStream.getFormat().getFrameSize();
-						if (bytesPerFrame == AudioSystem.NOT_SPECIFIED) {
-							// some audio formats may have unspecified frame size
-							// in that case we may read any amount of bytes
-							bytesPerFrame = 1;
-						}
-						// Set an arbitrary buffer size of 1024 frames.
-						int numBytes = 1024 * bytesPerFrame;
-						byte[] audioBytes = new byte[numBytes];
-						try {
-							int numBytesRead = 0;
-							int numFramesRead = 0;
-							// Try to read numBytes bytes from the file.
-							while ((numBytesRead =
-									audioInputStream.read(audioBytes)) != -1) {
-								// Calculate the number of frames actually read.
-								numFramesRead = numBytesRead / bytesPerFrame;
-								totalFramesRead += numFramesRead;
-								// Here, do something useful with the audio data that's
-								// now in the audioBytes array...
-							}
-						} catch (Exception ex) {
-							// Handle the error...
-						}
-					} catch (Exception e) {
-						// Handle the error...
-					}
-					 */
-
 					audioDataCopy = audioData;
 
 					// create an echoprint codegen wrapper and get the code
 					time = System.currentTimeMillis();
 
-					Codegen codegen = new Codegen();
-					//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
-	    			code = codegen.generate(audioData, samplesIn);
-	    			Log.d("Fingerprinter", "Codegen created in: " + (System.currentTimeMillis() - time) + " millis");
-					Log.d("Fingerprinter", "Fingerprint: " + code);
 
 
+					Thread ttt = new CodegenThread(samplesIn);
+					ttt.start();
 
 	    			if(code.length() == 0)
 	    			{
@@ -262,108 +229,11 @@ public class AudioFingerprinter implements Runnable
 						continue;
 	    			}
 
-	    			
+
 	    			didGenerateFingerprintCode(code);
 
 	    			// fetch data from echonest
 	    			time = System.currentTimeMillis();
-
-	    			/*
-					String urlstr = SERVER_URL + code;			
-					HttpClient client = new DefaultHttpClient();
-	    			HttpGet get = new HttpGet(urlstr);
-	    			
-	    			// get response
-	    			HttpResponse response = client.execute(get);                
-	    			// Examine the response status
-	    	        Log.d("Fingerprinter",response.getStatusLine().toString());
-	
-	    	        // Get hold of the response entity
-	    	        HttpEntity entity = response.getEntity();
-	    	        // If the response does not enclose an entity, there is no need
-	    	        // to worry about connection release
-	
-	    	        String result = "";
-	    	        if (entity != null) 
-	    	        {
-	    	            // A Simple JSON Response Read
-	    	            InputStream instream = entity.getContent();
-	    	            result= convertStreamToString(instream);
-	    	            // now you have the string representation of the HTML request
-	    	            instream.close();
-	    	        }
-	     			Log.d("Fingerprinter", "Results fetched in: " + (System.currentTimeMillis() - time) + " millis");
-
-					// On successful recognition the MooMash API returns a JSON structure such as:
-					// {"response":{"songs":[{"artist_id":"","artist_name":"P!nk","id":"","score":54,"title":"Don't Let Me Get Me","message":"OK"}],"status":{"version":"1.0","message":"Success","code":0}}}
-					Log.v("AudioFingerprinter", "run - result: " + result);
-
-	    			// parse JSON
-		    		JSONObject jobj = new JSONObject(result);
-
-					if (jobj.has("response")) {
-						JSONObject responseObject = jobj.getJSONObject("response");
-
-						if (responseObject.has("songs")) {
-							JSONArray songsArray = responseObject.getJSONArray("songs");
-
-							if (songsArray.length() > 0) {
-								JSONObject songObject = songsArray.getJSONObject(0);
-
-								Hashtable<String, String> match = new Hashtable<String, String>();
-								match.put("artist_name", songObject.getString("artist_name"));
-								match.put("title", songObject.getString("title"));
-
-								didFindMatchForCode(match, code);
-							}
-							else {
-								didNotFindMatchForCode(code);
-							}
-						}
-					}
-					else {
-						didFailWithException(new Exception("result JSON parsing error"));
-					}
-
-	    			*/
-
-					// Old parsing code for Echonest API.
-					/*
-		    		if(jobj.has("code"))
-		    			Log.d("Fingerprinter", "Response code:" + jobj.getInt("code") + " (" + this.messageForCode(jobj.getInt("code")) + ")");
-		    		
-		    		if(jobj.has("match"))
-		    		{
-		    			if(jobj.getBoolean("match"))
-		    			{
-		    				Hashtable<String, String> match = new Hashtable<String, String>();
-		    				match.put(SCORE_KEY, jobj.getDouble(SCORE_KEY) + "");
-		    				match.put(TRACK_ID_KEY, jobj.getString(TRACK_ID_KEY));
-		    				
-		    				// the metadata dictionary IS NOT included by default in the API demo server
-		    				// replace line 66/67 in API.py with:
-		    				// return json.dumps({"ok":True,"message":response.message(), "match":response.match(), "score":response.score, \
-	                        // "qtime":response.qtime, "track_id":response.TRID, "total_time":response.total_time, "metadata":response.metadata})
-		    				if(jobj.has("metadata"))
-		    				{
-		    					JSONObject metadata = jobj.getJSONObject("metadata");
-			    						    				
-			    				if(metadata.has(SCORE_KEY)) match.put(META_SCORE_KEY, metadata.getDouble(SCORE_KEY) + "");
-			    				if(metadata.has(TITLE_KEY)) match.put(TITLE_KEY, metadata.getString(TITLE_KEY));
-			    				if(metadata.has(ARTIST_KEY)) match.put(ARTIST_KEY, metadata.getString(ARTIST_KEY));
-			    				if(metadata.has(ALBUM_KEY)) match.put(ALBUM_KEY, metadata.getString(ALBUM_KEY));
-		    				}
-		    				
-		    				didFindMatchForCode(match, code);
-		    			}
-	    				else
-	    					didNotFindMatchForCode(code);	    			
-		    		}	    		
-		    		else
-		    		{
-		    			didFailWithException(new Exception("Unknown error"));
-		    		}
-					*/
 
 					firstRun = false;
 				
@@ -447,8 +317,6 @@ public class AudioFingerprinter implements Runnable
 	
 	private void didFinishListening()
 	{
-		//Log.v("AudioFingerprinter", "didFinishListening");
-
 		if(listener == null)
 			return;
 		
@@ -469,8 +337,6 @@ public class AudioFingerprinter implements Runnable
 	
 	private void didFinishListeningPass()
 	{
-		//Log.v("AudioFingerprinter", "didFinishListeningPass");
-
 		if(listener == null)
 			return;
 		
@@ -673,5 +539,20 @@ public class AudioFingerprinter implements Runnable
 		 * @param e an exception with the error
 		 */
 		public void didFailWithException(Exception e);
+	}
+
+	public class	CodegenThread extends Thread{
+		int samIn;
+		Codegen codegen;
+		public CodegenThread( int sIn) {
+			samIn = sIn;
+			codegen  = new Codegen();
+		}
+		public void run() {
+			//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
+			code = codegen.generate(audioData, samIn);
+			//Log.d("Fingerprinter", "Codegen created in: " + (System.currentTimeMillis() - time) + " millis");
+			Log.d("Fingerprinter", "Fingerprint: " + code);
+		}
 	}
 }

@@ -101,8 +101,9 @@ public class FingerFragment extends Fragment
                                MainActivity m = (MainActivity) getActivity();
                                riconoscimento.setUser_name(m.getUserName());
                                riconoscimento.startRec();
-                               Log.d("RIPETIZIONI","passato da qui");
-                               recordingHandler.postDelayed(this,21000);
+
+                               recordingHandler.postDelayed(this,200);
+
                            } catch (Exception e) {
                                //disattivo l'handler ciclico e resetto il timer
                                recordingHandler.removeCallbacks(this);
