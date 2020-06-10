@@ -96,20 +96,20 @@ public class FingerFragment extends Fragment
                 toa.setGravity(Gravity.CENTER, 0, 0);
                 toa.show();
                 runnableRecordingTask = new Runnable() {
-                       public void run() {
-                           try {
-                               MainActivity m = (MainActivity) getActivity();
-                               riconoscimento.setUser_name(m.getUserName());
-                               riconoscimento.startRec();
+                    public void run() {
+                        try {
+                            MainActivity m = (MainActivity) getActivity();
+                            riconoscimento.setUser_name(m.getUserName());
+                            riconoscimento.startRec();
 
-                               recordingHandler.postDelayed(this,1000);
+                            recordingHandler.postDelayed(this,200);
 
-                           } catch (Exception e) {
-                               //disattivo l'handler ciclico e resetto il timer
-                               recordingHandler.removeCallbacks(this);
-                               e.printStackTrace();
-                           }
-                       }
+                        } catch (Exception e) {
+                            //disattivo l'handler ciclico e resetto il timer
+                            recordingHandler.removeCallbacks(this);
+                            e.printStackTrace();
+                        }
+                    }
                 };
 
                 getActivity().runOnUiThread(runnableRecordingTask);
