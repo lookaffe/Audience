@@ -102,7 +102,7 @@ public class FingerFragment extends Fragment
                                riconoscimento.setUser_name(m.getUserName());
                                riconoscimento.startRec();
 
-                               recordingHandler.postDelayed(this,200);
+                               recordingHandler.postDelayed(this,1000);
 
                            } catch (Exception e) {
                                //disattivo l'handler ciclico e resetto il timer

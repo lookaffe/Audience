@@ -217,9 +217,13 @@ public class AudioFingerprinter implements Runnable
 					// create an echoprint codegen wrapper and get the code
 					time = System.currentTimeMillis();
 
+					Codegen codegen = new Codegen();
+					//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
+	    			code = codegen.generate(audioData, samplesIn);
+	    			Log.d("Fingerprinter", "Codegen created in: " + (System.currentTimeMillis() - time) + " millis");
+					Log.d("Fingerprinter", "Fingerprint: " + code);
 
-
-					Thread ttt = new CodegenThread(samplesIn);
+					Thread ttt = new CodegenThread();
 					ttt.start();
 
 	    			if(code.length() == 0)
@@ -541,18 +545,8 @@ public class AudioFingerprinter implements Runnable
 		public void didFailWithException(Exception e);
 	}
 
-	public class	CodegenThread extends Thread{
-		int samIn;
-		Codegen codegen;
-		public CodegenThread( int sIn) {
-			samIn = sIn;
-			codegen  = new Codegen();
-		}
+	private class	CodegenThread extends Thread{
 		public void run() {
-			//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
-			code = codegen.generate(audioData, samIn);
-			//Log.d("Fingerprinter", "Codegen created in: " + (System.currentTimeMillis() - time) + " millis");
-			Log.d("Fingerprinter", "Fingerprint: " + code);
-		}
+			}
 	}
 }
