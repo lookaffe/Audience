@@ -96,8 +96,6 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     boolean recording, resolved;
     AudioFingerprinter fingerprinter;
 
-    int count = 0;
-
     public FingerPrint()
     {
         super("FingerPrint");
@@ -266,36 +264,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             recorder = null;
             recordingThread = null;
         }
-
-        // Ora questo viene fatto dentro al thread del timer
-
-        /*
-        FILE_WAVE=getFilename(PATH_WAVE,".wav");
-        copyWaveFile(PATH_TEMP+File.separator+AUDIO_RECORDER_TEMP_FILE, FILE_WAVE);
-        */
         new CodificaTask().execute(avvioDaSchedulatore);
-
-
-    }
-
-    public void deleteRecordedFiles()
-    {
-        new Thread(new Runnable() {
-            public void run() {
-                try
-                {
-                    File dirWave = new File(PATH_WAVE);
-                    File[] fpw = dirWave.listFiles();
-                    for (File fi : fpw) {
-                        fi.delete();
-                    }
-                }
-                catch(final Exception e)
-                {
-                    LogAndroid.info(TAG, "deleteRecordedFiles "+e.getMessage() + " on " + PATH_WAVE);
-                }
-            }
-        }).start();
     }
 
     public void didFinishListening()
@@ -342,26 +311,13 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         @Override
         protected Boolean doInBackground(Boolean... avvioDaSchedulatore)
         {
-/*
-            if ((new File(FILE_WAVE)).exists())
-            {
-
- */
             try {
                 createFP();
             } catch (Exception e) {
                 excRaised = e.getMessage();
                 ezz=e;
             }
-            /*}
-            else
-            {
-                LogAndroid.info(TAG, "FILE NOT FOUND " + FILE_WAVE);
-            }
-
-             */
-            return false;
-
+        return false;
         }
 
         @Override
@@ -369,9 +325,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         {
 
             if (!excRaised.equals("")){
-
                 getSoundNotification();
-
             }
 
             /*
