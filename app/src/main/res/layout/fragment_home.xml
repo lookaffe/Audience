@@ -60,7 +60,6 @@
             android:hint="nome minuscolo (attenzione agli spazi)"
             android:inputType="text"
             android:paddingLeft="8dp"
-            android:text="luca"
             android:textColorHint="#a9b0c3"
             android:textSize="13dp" />
 
@@ -82,7 +81,6 @@
             android:hint="nome minuscolo come per l'utente"
             android:inputType="textPassword"
             android:paddingLeft="8dp"
-            android:text="luca"
             android:textColorHint="#a9b0c3"
             android:textSize="13dp" />
 

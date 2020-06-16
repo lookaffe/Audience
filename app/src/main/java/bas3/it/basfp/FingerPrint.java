@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.telephony.SmsManager;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,25 +50,11 @@ import static intersistemi.it.afp.util.Util.TAG;
 
 public class FingerPrint extends IntentService implements AudioFingerprinterListener
 {
-    private static final int RECORDER_BPP = 16;
-    private static final String AUDIO_RECORDER_TEMP_FILE = "rec_temp";
-
     private static final int RECORDER_SAMPLERATE = 11025;
-    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private AudioRecord recorder = null;
     private int bufferSize = 0;
     private boolean isRecording = false;
-    private int secondsToRecord;
-    private Utility basFp;
     private Util util;
-    private static final String DIR_FP = "/bas_fp/";
-    private static final String DIR_WAVE = "/bas_wave/";
-    private static final String DIR_TEMP = "/bas_temp/";
-    private static final String SERVER_NOT_FOUND_TITLE = "Server non raggiungibile";
-    private static final String SERVER_NOT_FOUND_BODY = "Il server non risulta essere raggiungibile. Ricontrollare la connessione di rete e riprovare, grazie.";
-    private String PATH_FP, FILE_FP,PATH_WAVE,FILE_WAVE,PATH_TEMP;
-    private File FILE_TEMP;
     String pathBase;
     private Thread recordingThread = null;
     private String idRegistrazione;
@@ -78,19 +65,9 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     private byte[] audioData;
     private int minSplitFile=3;
     FragmentActivity activity;
-    private ScheduledExecutorService exec=null;
-    private ScheduledExecutorService execAuto=null;
     private boolean makeToast=false;
     Context context=null;
-    private Properties properties;
-    private ProgressDialog dialog;
-    private View ll;
-    private MediaRecorder mediaRecorder = new MediaRecorder();
-    private static final int AUDIO_TRUNK_MAX_DURATION_MS = 10000;
     private static final String LOG_FILENAME = "loguploads.txt";
-    private android.util.Log Log;
-
-    private TextView userLogged;
 
     private String user_name;
 
@@ -238,10 +215,13 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
 
     public void writeApplicationLog(long opTime){
         Locale locale = new Locale(Locale.ITALIAN.toString());
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", locale);
-        Date today = new Date();
+
+        Date today = new Date(System.currentTimeMillis() - opTime);
         String dataStr = sdf.format(today);
-        String logOperation = dataStr +" - Durata ascolto: "+Math.floor(opTime/1000)+" sec." ;
+
+        String logOperation = dataStr +" - Durata ascolto: "+ Math.floor(opTime/1000) +" sec." ;
         appendLog(logOperation);
     }
 
@@ -319,6 +299,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             } catch (Exception e) {
                 excRaised = e.getMessage();
                 ezz=e;
+
             }
             return false;
         }

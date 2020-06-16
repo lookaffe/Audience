@@ -26,9 +26,6 @@
 
 package edu.gvsu.masl.echoprint;
 
-import android.content.Context;
-import android.telephony.SmsManager;
-
 /**
  * Codegen class<br>
  * This class bridges the native Codegen library with the Java side...
@@ -39,13 +36,12 @@ import android.telephony.SmsManager;
 public class Codegen 
 {
 	private final float normalizingValue = Short.MAX_VALUE;
-	private Context context;
 
 	native String codegen(float data[], int numSamples);
 
 	static
 	{
-		System.loadLibrary("echoprint-jni");
+			System.loadLibrary("echoprint-jni");
 	}
 	
 	/**

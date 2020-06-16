@@ -249,7 +249,8 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.INTERNET}, MY_PERMISSIONS_REQUEST);
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST);
                 // MY_PERMISSIONS_REQUEST is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
