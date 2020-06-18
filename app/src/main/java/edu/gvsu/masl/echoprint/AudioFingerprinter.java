@@ -47,20 +47,6 @@ import java.util.Hashtable;
  */
 public class AudioFingerprinter implements Runnable
 {
-	/*public final static String META_SCORE_KEY = "meta_score";
-	public final static String SCORE_KEY = "score";
-	public final static String ALBUM_KEY = "release";
-	public final static String TITLE_KEY = "track";
-	public final static String TRACK_ID_KEY = "track_id";
-	public final static String ARTIST_KEY = "artist";*/
-
-	// Disabled because the Echonest API is no longer available (https://developer.echonest.com/forums/thread/3650).
-//	private final String SERVER_URL = "<your server address here>/query?fp_code=";
-
-	// Instead now using the MooMash API (http://www.mooma.sh/api.html).
-	// Remember to request an API key from MooMash through the website and replace it in the url below.
-//	private final String SERVER_URL = "http://api.mooma.sh/v1/song/identify?api_key=YOURMOOMASHAPIKEYHERE&code=";
-
 	private final int FREQUENCY = 11025;
 	private final int CHANNEL = AudioFormat.CHANNEL_IN_MONO;
 	private final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
@@ -143,13 +129,11 @@ public class AudioFingerprinter implements Runnable
 	public String getCode()
 	{
 		String co = code;
-		//Log.d("Fingerprinter", "Fingerprint: " + co);
 		return co;
 	}
 
 	public short[] getAudioData()
 	{
-		//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
 		return audioDataCopy;
 	}
 

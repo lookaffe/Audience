@@ -238,10 +238,13 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
 
     public void writeApplicationLog(long opTime){
         Locale locale = new Locale(Locale.ITALIAN.toString());
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", locale);
-        Date today = new Date();
+
+        Date today = new Date(System.currentTimeMillis() - opTime);
         String dataStr = sdf.format(today);
         String logOperation = dataStr +" - Durata ascolto: "+Math.floor(opTime/1000)+" sec." ;
+
         appendLog(logOperation);
     }
 
