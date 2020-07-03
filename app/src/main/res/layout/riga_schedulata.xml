@@ -46,7 +46,8 @@
                 android:text="hour"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                tools:ignore="RtlCompat" />
 
             <ImageButton
                 android:id="@+id/delete_btn"

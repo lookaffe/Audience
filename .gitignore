@@ -2,3 +2,5 @@
 *.lock
 *.dex
 *.class
+*.bin
+*.lock

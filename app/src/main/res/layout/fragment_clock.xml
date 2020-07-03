@@ -14,7 +14,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="60dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/ic_icon_add_clock"
+        app:srcCompat="@drawable/ic_icon_add_clock"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
     <ListView

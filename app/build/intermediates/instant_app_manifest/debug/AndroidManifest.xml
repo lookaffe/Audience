@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="intersistemi.it.afp"
     android:targetSandboxVersion="2"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="0.9.2711" >
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="25" />
+        android:targetSdkVersion="28" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,13 +18,15 @@
 
     <application
         android:allowBackup="true"
+        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher_finger"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_finger"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="intersistemi.it.afp.activity.MainActivity"
             android:label="@string/app_name"
@@ -52,6 +54,10 @@
             android:name="bas3.it.basfp.FingerPrint"
             android:exported="false" >
         </service>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

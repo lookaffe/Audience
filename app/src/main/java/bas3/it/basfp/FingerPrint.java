@@ -135,7 +135,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
     public void createFP() throws Exception {
-        it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
 
         // fingerprinting the audio file
         if(fingerprinter == null)

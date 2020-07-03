@@ -5,6 +5,17 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.view.menu.MenuView;
 import android.widget.Button;
 
+import com.google.protobuf.ByteString;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.text.DateFormat;
@@ -13,6 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+
+import basfp.it.bas3.support.LogAndroid;
 
 /**
  * Created by fnardi on 13/03/2017.
@@ -24,7 +37,10 @@ public class Util
     public static String TAG="baslib";
     public static final String LOGIN_SERVER_URL_PROPERTY = "LOGIN_SERVER_URL";
     public static final String UPLOAD_SERVER_URL_PROPERTY = "UPLOAD_SERVER_URL";
+    public static final String LOG_SERVER_URL_PROPERTY = "LOG_SERVER_URL";
     private static final String PROPERTY_FILENAME = "appascolto.properties";
+    private static String LOG_PATH;
+    private static String USER_NAME;
     private static Util instance= null;
     private Properties properties;
 
@@ -131,6 +147,71 @@ public class Util
             calendar.add(Calendar.DAY_OF_YEAR, 1);
         }*/
         return ""+calendar.getTimeInMillis();
+    }
+
+    public void setLogPath (String s){
+        LOG_PATH = s;
+        LogAndroid.info("LOG_PATH", LOG_PATH);
+    }
+
+    public String getLogPath(){
+        return LOG_PATH;
+    }
+
+    public void setUserName (String s){
+        USER_NAME = s;
+        LogAndroid.info("USER_NAME", USER_NAME);
+    }
+
+    public String getUserName(){
+        return USER_NAME;
+    }
+
+    public ByteString getFileContent(){
+        File logFile = new File(LOG_PATH+"/"+USER_NAME+".txt");
+        int size = (int) logFile.length();
+        byte[] bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(logFile));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return ByteString.copyFrom(bytes);
+    }
+
+    public void updateLog(String text)
+    {
+        File logFile = new File(LOG_PATH+"/"+USER_NAME+".txt");
+        if (!logFile.exists())
+        {
+            try
+            {
+                logFile.createNewFile();
+                LogAndroid.info("NEW LOG FILE", String.valueOf(logFile));
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        try
+        {
+            //BufferedWriter for performance, true to set append to file flag
+            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+            buf.append(text);
+            buf.newLine();
+            buf.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -140,7 +140,7 @@ public class FingerPrint_old extends IntentService
             //audioData = ous.toByteArray();
             audioData = FileUtils.readFileToByteArray(new File(file));
             ByteString bs=ByteString.copyFrom(audioData);
-            it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+            it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
             /* invece di passare bs come ByteArray del wav, generiamo qui la fingerprint e passiamo quella
 
              */

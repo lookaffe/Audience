@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         controllaPermessi(); // pop up di accettazione dei permessi
 
+        util= new Util();
         mContext = getApplicationContext();
 
         if(Environment.getExternalStorageState().equals("mounted")){
@@ -297,5 +298,7 @@ public class MainActivity extends AppCompatActivity
     public String getUserName(){
         return this.USER_NAME;
     }
+
+
 
 }

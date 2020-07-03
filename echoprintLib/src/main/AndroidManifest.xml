@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress XmlHighlighting -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="edu.gvsu.masl.echoprint"
       android:versionCode="1"
