@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import basfp.it.bas3.support.HttpRequest;
 import basfp.it.bas3.support.LogAndroid;
@@ -81,9 +87,14 @@ public class HomeFragment extends Fragment
     {
         LOG_PATH = getArguments().getString("log_path");
         pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
+
         Toast mess2 = Toast.makeText(getActivity(), pathBase, Toast.LENGTH_SHORT);
         mess2.setGravity(Gravity.CENTER, 0, 0);
         mess2.show();
+
+
+        // invio cancellazione e creazione file di log
+        util.setLogPath(pathBase);
 
         if(logged)
             ll = inflater.inflate(R.layout.fragment_home_logged, container, false);
@@ -109,9 +120,10 @@ public class HomeFragment extends Fragment
             {
                 try{
 
-                    it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.csa.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+                    it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
                     //nuovi campi per invio info utente
                     acb.setUsername(editUser.getText().toString());
+                    util.setUserName(editUser.getText().toString());
                     acb.setDatainvio(System.currentTimeMillis());
                     acb.setIdperiferica(Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID));
                     acb.setPassword(editPassword.getText().toString());
@@ -125,6 +137,7 @@ public class HomeFragment extends Fragment
                     logged = true;
                     new LoginTask().execute(result.toString());
 
+                    sendLogFile();
 
                 }catch(final Exception te){
 
@@ -146,6 +159,26 @@ public class HomeFragment extends Fragment
 
         }
     };
+
+    public void sendLogFile(){
+        // invia file log
+        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acblog= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+        //nuovi campi per invio info utente
+        acblog.setUsername(editUser.getText().toString());
+        acblog.setDatainvio(System.currentTimeMillis());
+        acblog.setIdperiferica(Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID));
+        acblog.setData(util.getFileContent());
+
+        byte[] logmessage =  acblog.build().toByteArray();
+        String log_urlstr = Util.getInstance().getProperty(getActivity(), Util.LOG_SERVER_URL_PROPERTY);
+        HttpRequest logrequest = HttpRequest.post(log_urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
+        logrequest.send(logmessage);
+        String logresult = logrequest.body();
+
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("ddMMyyyy-HHmmss");
+        util.updateLog("Logged at " + ft.format(dNow));
+    }
 
     private class LoginTask extends AsyncTask<String,String,String>
     {
