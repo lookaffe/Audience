@@ -157,7 +157,7 @@ public class Util
 
     public void setDeviceId (String s){
         DEVICE_ID = s;
-        LogAndroid.info("LOG_PATH", DEVICE_ID);
+        LogAndroid.info("DEVICE_ID", DEVICE_ID);
     }
 
     public String getDeviceId(){

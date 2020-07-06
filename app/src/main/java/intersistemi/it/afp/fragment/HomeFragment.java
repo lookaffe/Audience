@@ -87,10 +87,6 @@ public class HomeFragment extends Fragment
         mess2.setGravity(Gravity.CENTER, 0, 0);
         mess2.show();
 
-
-        // invio cancellazione e creazione file di log
-        util.setLogPath(pathBase);
-        util.setDeviceId(Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID));
         if(logged)
             ll = inflater.inflate(R.layout.fragment_home_logged, container, false);
         else

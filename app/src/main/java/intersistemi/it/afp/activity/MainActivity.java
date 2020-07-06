@@ -105,7 +105,17 @@ public class MainActivity extends AppCompatActivity
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         util= new Util();
+
+        // parametri per il file di log
         util.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+
+        if(Environment.getExternalStorageState().equals("mounted")){
+            LOG_PATH = Environment.getExternalStorageDirectory().getPath();
+        } else
+            LOG_PATH = getFilesDir().getPath();
+        // invio cancellazione e creazione file di log
+        util.setLogPath(LOG_PATH);
+
         sendLogFile();
 
         controllaPermessi(); // pop up di accettazione dei permessi
@@ -113,10 +123,7 @@ public class MainActivity extends AppCompatActivity
 
         mContext = getApplicationContext();
 
-        if(Environment.getExternalStorageState().equals("mounted")){
-            LOG_PATH = Environment.getExternalStorageDirectory().getPath();
-        } else
-            LOG_PATH = getFilesDir().getPath();
+
 
         Bundle bundle = new Bundle();
         bundle.putString("log_path", LOG_PATH);
@@ -136,7 +143,6 @@ public class MainActivity extends AppCompatActivity
             //Restore the fragment's instance
            // fragmentHome = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentHome");
         }
-        util= new Util();
 
         // carica tutti i fragment e nascondi tutti tranne quello di log in
         fm= getSupportFragmentManager();
@@ -260,8 +266,10 @@ public class MainActivity extends AppCompatActivity
                 // MY_PERMISSIONS_REQUEST is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
+
             }
         }
+
     }
 
     // gestisce il risultato dell'accettazione dei permessi
@@ -306,12 +314,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void sendLogFile(){
+        util.updateLog("Log file sended on new open");
         // invia file log
         it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acblog= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
         //nuovi campi per invio info utente
         acblog.setDatainvio(System.currentTimeMillis());
         acblog.setIdperiferica(util.getDeviceId());
         acblog.setData(util.getLogContent());
+        LogAndroid.info("LOG CONTENT", util.getLogContent().toStringUtf8());
 
         byte[] logmessage =  acblog.build().toByteArray();
         String log_urlstr = "http://csa.intersistemi.it:8080/directorDashboardServerBE/DirectordashboardService?method=userlog";
