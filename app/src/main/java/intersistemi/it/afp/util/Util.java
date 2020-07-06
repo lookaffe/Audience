@@ -8,12 +8,10 @@ import android.widget.Button;
 import com.google.protobuf.ByteString;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -39,8 +37,7 @@ public class Util
     public static final String UPLOAD_SERVER_URL_PROPERTY = "UPLOAD_SERVER_URL";
     public static final String LOG_SERVER_URL_PROPERTY = "LOG_SERVER_URL";
     private static final String PROPERTY_FILENAME = "appascolto.properties";
-    private static String LOG_PATH;
-    private static String USER_NAME;
+    private static String LOG_PATH, DEVICE_ID;
     private static Util instance= null;
     private Properties properties;
 
@@ -158,17 +155,17 @@ public class Util
         return LOG_PATH;
     }
 
-    public void setUserName (String s){
-        USER_NAME = s;
-        LogAndroid.info("USER_NAME", USER_NAME);
+    public void setDeviceId (String s){
+        DEVICE_ID = s;
+        LogAndroid.info("LOG_PATH", DEVICE_ID);
     }
 
-    public String getUserName(){
-        return USER_NAME;
+    public String getDeviceId(){
+        return DEVICE_ID;
     }
 
-    public ByteString getFileContent(){
-        File logFile = new File(LOG_PATH+"/"+USER_NAME+".txt");
+    public ByteString getLogContent(){
+        File logFile = new File(LOG_PATH+"/"+DEVICE_ID+".txt");
         int size = (int) logFile.length();
         byte[] bytes = new byte[size];
         try {
@@ -187,7 +184,7 @@ public class Util
 
     public void updateLog(String text)
     {
-        File logFile = new File(LOG_PATH+"/"+USER_NAME+".txt");
+        File logFile = new File(LOG_PATH+"/"+DEVICE_ID+".txt");
         if (!logFile.exists())
         {
             try
@@ -211,6 +208,13 @@ public class Util
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteLog() {
+        File logFile = new File(LOG_PATH + "/" + DEVICE_ID + ".txt");
+        if (logFile.exists()) {
+            logFile.delete();
         }
     }
 

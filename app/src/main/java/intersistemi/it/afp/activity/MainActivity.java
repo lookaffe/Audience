@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import java.util.Properties;
 
+import basfp.it.bas3.support.HttpRequest;
 import basfp.it.bas3.support.LogAndroid;
 import intersistemi.it.afp.BuildConfig;
 import intersistemi.it.afp.R;
@@ -98,13 +100,17 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
-        //Questi settagaggi servono per abilitare i permessi di rete verso l'esterno.
+        //Questi settaggi servono per abilitare i permessi di rete verso l'esterno.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
+        util= new Util();
+        util.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        sendLogFile();
+
         controllaPermessi(); // pop up di accettazione dei permessi
 
-        util= new Util();
+
         mContext = getApplicationContext();
 
         if(Environment.getExternalStorageState().equals("mounted")){
@@ -299,6 +305,21 @@ public class MainActivity extends AppCompatActivity
         return this.USER_NAME;
     }
 
+    public void sendLogFile(){
+        // invia file log
+        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acblog= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+        //nuovi campi per invio info utente
+        acblog.setDatainvio(System.currentTimeMillis());
+        acblog.setIdperiferica(util.getDeviceId());
+        acblog.setData(util.getLogContent());
 
+        byte[] logmessage =  acblog.build().toByteArray();
+        String log_urlstr = "http://csa.intersistemi.it:8080/directorDashboardServerBE/DirectordashboardService?method=userlog";
+        HttpRequest logrequest = HttpRequest.post(log_urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
+        logrequest.send(logmessage);
+        String logresult = logrequest.body();
+
+        util.deleteLog();
+    }
 
 }
