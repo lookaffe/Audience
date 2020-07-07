@@ -28,6 +28,8 @@ package edu.gvsu.masl.echoprint;
 
 import android.content.Context;
 
+import intersistemi.it.afp.util.Util;
+
 /**
  * Codegen class<br>
  * This class bridges the native Codegen library with the Java side...
@@ -39,10 +41,14 @@ public class Codegen
 {
 	private final float normalizingValue = Short.MAX_VALUE;
 
+
 	native String codegen(float data[], int numSamples);
+	private static final Util util = new Util();
 
 	static
 	{
+
+		util.updateLog("Codegen - loadLibrary");
 		System.loadLibrary("echoprint-jni");
 	}
 	
@@ -73,6 +79,7 @@ public class Codegen
 	 */
 	public String generate(short data[], int numSamples)
 	{
+		util.updateLog("Codegen - normalizeAudioData");
 		// echoprint expects data as floats, which is the native value for 
 		// core audio data, and I guess ffmpeg
 		// Android records data as 16 bit shorts, so we need to normalize the

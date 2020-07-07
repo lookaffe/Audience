@@ -116,14 +116,11 @@ public class MainActivity extends AppCompatActivity
         // invio cancellazione e creazione file di log
         util.setLogPath(LOG_PATH);
 
-        sendLogFile();
-
         controllaPermessi(); // pop up di accettazione dei permessi
 
+        sendLogFile();
 
         mContext = getApplicationContext();
-
-
 
         Bundle bundle = new Bundle();
         bundle.putString("log_path", LOG_PATH);
@@ -137,6 +134,7 @@ public class MainActivity extends AppCompatActivity
 
         fragmentLog=new LogFragment();
         fragmentLog.setArguments(bundle);
+
 
         //(Spinner) findViewById(R.id.progressBar);
         if (savedInstanceState != null) {
@@ -156,10 +154,7 @@ public class MainActivity extends AppCompatActivity
         ft.add(android.R.id.content,fragmentLog);
         ft.hide(fragmentLog);
 
-
         ft.commit();
-
-
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
@@ -172,18 +167,21 @@ public class MainActivity extends AppCompatActivity
     // genera il menù in alto a destra
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        util.updateLog("MainActivity - onCreateOptionsMenu");
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     public String getProperties(String key){
+        util.updateLog("MainActivity - getProperties");
         Properties properties = new Properties();
         String res ="";
         try{
             properties.load(this.getAssets().open("appascolto.properties"));
             res =  properties.get(key).toString();
         }catch(Exception e){
+            util.updateLog("MainActivity - getProperties | " + e);
             res="ERROR";
             e.printStackTrace();
         }
@@ -194,6 +192,7 @@ public class MainActivity extends AppCompatActivity
     // gestore dei click sul fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        util.updateLog("MainActivity - onOptionsItemSelected");
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -229,6 +228,7 @@ public class MainActivity extends AppCompatActivity
 
         // esegui il logout
         if (id == R.id.action_logoff) {
+            util.updateLog("MainActivity - onOptionsItemSelected - action_logoff");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -236,6 +236,7 @@ public class MainActivity extends AppCompatActivity
 
         // chiudi l'app
         if (id == R.id.action_quit){
+            util.updateLog("MainActivity - onOptionsItemSelected - action_quit");
             MainActivity.this.finish();
             System.exit(0);
         }
@@ -266,8 +267,8 @@ public class MainActivity extends AppCompatActivity
                 // MY_PERMISSIONS_REQUEST is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
-
             }
+
         }
 
     }
@@ -284,6 +285,7 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     LogAndroid.info(Util.TAG,"permessi ok");
+
                 }
                 else
                 {
@@ -301,6 +303,7 @@ public class MainActivity extends AppCompatActivity
     //Need to override to prevent logging out after Android back button is pressed.
     @Override
     public void onBackPressed() {
+        util.updateLog("MainActivity - onBackPressed");
         //Need to override to prevent logging out after Android back button is pressed.
         //Nothing to do here.
     }
@@ -314,14 +317,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void sendLogFile(){
-        util.updateLog("Log file sended on new open");
+        util.updateLog("MainActivity -  sendLogFile");
         // invia file log
         it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acblog= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
         //nuovi campi per invio info utente
         acblog.setDatainvio(System.currentTimeMillis());
-        acblog.setIdperiferica(util.getDeviceId());
+        acblog.setIdperiferica(util.getDeviceId() + "-" + android.os.Build.DEVICE + "-" + android.os.Build.MODEL);
         acblog.setData(util.getLogContent());
         LogAndroid.info("LOG CONTENT", util.getLogContent().toStringUtf8());
+
+        /*
+        s += "\n Device: " + android.os.Build.DEVICE;
+            s += "\n Model (and Product): " + android.os.Build.MODEL + " ("+ android.os.Build.PRODUCT + ")";
+         */
 
         byte[] logmessage =  acblog.build().toByteArray();
         String log_urlstr = "http://csa.intersistemi.it:8080/directorDashboardServerBE/DirectordashboardService?method=userlog";

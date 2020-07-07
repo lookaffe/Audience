@@ -16,7 +16,6 @@ import android.provider.Settings.Secure;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
@@ -114,11 +114,10 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         context=activity.getApplicationContext();
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         util= new Util();
-
-
     }
 
     private String readFile(String fileName) throws IOException {
+        util.updateLog("Fingerprint - readFile");
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
             StringBuilder sb = new StringBuilder();
@@ -129,13 +128,13 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
                 line = br.readLine();
             }
             return sb.toString();
-        } finally {
+        }
+        finally {
             br.close();
         }
     }
 
     public void createFP() throws Exception {
-        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
 
         // fingerprinting the audio file
         if(fingerprinter == null)
@@ -148,15 +147,28 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             fingerprinter.fingerprint(20, false);
         }
 
-        if (codefp != null && codefp != precodefp) { //questo if serve per controllare che ci sia una fingerprint da spedire e sia diversa dalla precedente. Può essere sostituito con un corretto controllo sui thread
+        if(checkAndSendFP(codefp)) precodefp = codefp;
+
+        if (audio != null && audio != preaudio) {
+            //writeWav(audio);
+            preaudio = audio;
+        }
+    }
+
+    private boolean checkAndSendFP(String fpcode) throws UnsupportedEncodingException {
+
+        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+
+        if (fpcode != null && fpcode != precodefp) { //questo if serve per controllare che ci sia una fingerprint da spedire e sia diversa dalla precedente. Può essere sostituito con un corretto controllo sui thread
+            util.updateLog("Fingerprint - checkAndSendFP");
             //manda fp
-            ByteString bs = ByteString.copyFrom(codefp, "UTF-8");
+
+            ByteString bs = ByteString.copyFrom(fpcode, "UTF-8");
 
             acb.setData(bs); //invia il file audio
             //nuovi campi per invio info utente
 
             //spedisce i dati al server
-            LogAndroid.info("USER", user_name);
             acb.setUsername(user_name);
             acb.setDatainvio(System.currentTimeMillis());
             acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
@@ -168,16 +180,14 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             request.send(message);
             String result = request.body();
 
-            precodefp = codefp;
-        }
+            return true;
 
-        if (audio != null && audio != preaudio) {
-            //writeWav(audio);
-            preaudio = audio;
-        }
+        } else return false;
+
     }
 
     private void getSoundNotification(){
+        util.updateLog("Fingerprint - getSoundNotification");
         activity.runOnUiThread(new Runnable()
         {
             public void run()
@@ -198,8 +208,8 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
     @Override
-    protected void onHandleIntent(Intent intent)
-    {
+    protected void onHandleIntent(Intent intent){
+        util.updateLog("Fingerprint - onHandleIntent");
         LogAndroid.info(TAG, "INIZIO SCHEDULAZIONE");
         final String action = intent.getAction();
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
@@ -210,11 +220,11 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
 
-    private void inizializzaPath()
-    {
+    private void inizializzaPath(){
         File app1= new File(pathBase);
         if(!app1.exists())
             app1.mkdirs();
+        //util.updateLog("Fingerprint - inizializzaPath");
     }
 
     public void setUser_name(String name){
@@ -222,7 +232,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
     public void startRec() throws IOException {
-
+        //util.updateLog("Fingerprint - startRec");
         new CodificaTask().execute(false);
     }
 
@@ -232,11 +242,13 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     public void stopRec() {
         if(recording)
         {
+            util.updateLog("Fingerprint - stopRec");
             fingerprinter.stop();
         }
     }
 
     public void writeApplicationLog(long opTime){
+        util.updateLog("Fingerprint - writeApplicationLog");
         Locale locale = new Locale(Locale.ITALIAN.toString());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", locale);
@@ -248,12 +260,9 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         appendLog(logOperation);
     }
 
-
-
-
-
     public void fineRegistrazione(boolean avvioDaSchedulatore)
     {
+        util.updateLog("Fingerprint - fineRegistrazione");
         LogAndroid.info(TAG, "fineRegistrazione");
         stopRec = util.getCurrectTimestamp();
 
@@ -318,8 +327,10 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         protected Boolean doInBackground(Boolean... avvioDaSchedulatore)
         {
             try {
-                createFP();
+                //if( !fingerprinter.isItRunning())
+                    createFP();
             } catch (Exception e) {
+                util.updateLog("Fingerprint - CodificaTask | " + e);
                 excRaised = e.getMessage();
                 ezz=e;
             }
@@ -329,7 +340,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         @Override
         protected void onPostExecute(Boolean avvioDaSchedulatore)
         {
-
+            util.updateLog("Fingerprint - onPostExecute");
             if (!excRaised.equals("")){
                 getSoundNotification();
             }
@@ -354,8 +365,8 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     }
 
 
-    private String getFilename(String dir,String estensione)
-    {
+    private String getFilename(String dir,String estensione) {
+        util.updateLog("Fingerprint - getFilename");
         String uuid = "";
         try
         {
@@ -373,6 +384,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
 
     public void appendLog(String text)
     {
+        util.updateLog("Fingerprint - appendLog");
         File logFile = new File(pathBase+"/"+LOG_FILENAME);
         if (!logFile.exists())
         {
@@ -382,6 +394,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             }
             catch (IOException e)
             {
+                util.updateLog("Fingerprint - appendLog | " + e);
                 e.printStackTrace();
             }
         }
@@ -402,6 +415,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         }
         catch (Exception e)
         {
+            util.updateLog("Fingerprint - appendLog | " + e);
             e.printStackTrace();
         }
     }

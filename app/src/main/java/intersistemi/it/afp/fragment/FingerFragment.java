@@ -35,6 +35,7 @@ public class FingerFragment extends Fragment
     private FingerPrint riconoscimento;
     final Handler recordingHandler = new Handler();
     private Runnable runnableRecordingTask;
+    private Util util;
 
     public FingerFragment()
     {
@@ -51,9 +52,12 @@ public class FingerFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        util= new Util();
+        util.updateLog("FingerFragment - onCreate");
     }
 
     private boolean isServiceRunning() {
+        util.updateLog("FingerFragment - isServiceRunning");
         ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
 
@@ -71,6 +75,7 @@ public class FingerFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
+        util.updateLog("FingerFragment - onCreateView");
         LOG_PATH = getArguments().getString("log_path");
         View ll = inflater.inflate(R.layout.fragment_finger, container, false);
         String pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
@@ -88,6 +93,7 @@ public class FingerFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                util.updateLog("FingerFragment - btnAvvia.setOnClickListener");
                 LogAndroid.info(TAG, "Avvia Registrazione Click");
                 c.setBase(SystemClock.elapsedRealtime());
                 c.start();
@@ -105,6 +111,7 @@ public class FingerFragment extends Fragment
                             recordingHandler.postDelayed(this,200);
 
                         } catch (Exception e) {
+                            util.updateLog("FingerFragment - btnAvvia.setOnClickListener | " + e);
                             //disattivo l'handler ciclico e resetto il timer
                             recordingHandler.removeCallbacks(this);
                             e.printStackTrace();
@@ -124,6 +131,7 @@ public class FingerFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                util.updateLog("FingerFragment - btnFine.setOnClickListener");
                 int optime = (int) (SystemClock.elapsedRealtime() - c.getBase());
                 LogAndroid.info(TAG, "Fine Registrazione Click");
                 c.setBase(SystemClock.elapsedRealtime());
@@ -142,6 +150,7 @@ public class FingerFragment extends Fragment
                     mess.setGravity(Gravity.CENTER, 0, 0);
                     mess.show();
                 } catch (Exception e) {
+                    util.updateLog("FingerFragment - btnFine.setOnClickListener | " + e);
                     e.printStackTrace();
                 }
 
@@ -155,6 +164,7 @@ public class FingerFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                util.updateLog("FingerFragment - btnAnnulla.setOnClickListener");
                 LogAndroid.info(TAG, "Annulla Registrazione Click");
                 c.setBase(SystemClock.elapsedRealtime());
                 c.stop();

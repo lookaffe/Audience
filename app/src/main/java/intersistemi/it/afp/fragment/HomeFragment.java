@@ -73,13 +73,13 @@ public class HomeFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         util= new Util();
-
+        util.updateLog("HomeFragment - onCreate");
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
     {
+        util.updateLog("HomeFragment - onCreateView");
         LOG_PATH = getArguments().getString("log_path");
         pathBase= LOG_PATH + File.separator + getString(R.string.app_name);
 
@@ -105,6 +105,7 @@ public class HomeFragment extends Fragment
         @Override
         public void onClick(View view)
         {
+            util.updateLog("HomeFragment - btnAccediOnClick");
             editUser =(EditText) ll.findViewById(R.id.user);
             editPassword=(EditText) ll.findViewById(R.id.password);
             if(editUser.getText().length()>0 && editPassword.getText().length()>0)
@@ -132,7 +133,7 @@ public class HomeFragment extends Fragment
 
 
                 }catch(final Exception te){
-
+                    util.updateLog("HomeFragment - btnAccediOnClick | " + te);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -169,6 +170,7 @@ public class HomeFragment extends Fragment
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
+                util.updateLog("HomeFragment - doInBackground | " + e);
                 e.printStackTrace();
             }
             return jsonResult[0];
@@ -179,6 +181,7 @@ public class HomeFragment extends Fragment
         @Override
         protected void onPostExecute(String user)
         {
+            util.updateLog("HomeFragment - onPostExecute");
             try {
                 dialog.hide();
 
@@ -211,7 +214,7 @@ public class HomeFragment extends Fragment
                         }});
                 }
             } catch (JSONException e) {
-                //e.printStackTrace();
+                util.updateLog("HomeFragment - onPostExecute | " + e);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -220,10 +223,6 @@ public class HomeFragment extends Fragment
                         mess.show();
                     }});
             }
-
-
         }
-
     }
-
 }

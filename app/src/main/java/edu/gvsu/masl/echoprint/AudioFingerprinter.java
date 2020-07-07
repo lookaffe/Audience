@@ -38,6 +38,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
 
+import intersistemi.it.afp.util.Util;
+
 /**
  * Main fingerprinting class<br>
  * This class will record audio from the microphone, generate the fingerprint code using a native library and query the data server for a match
@@ -55,13 +57,16 @@ public class AudioFingerprinter implements Runnable
 	private volatile boolean isRunning = false;
 	AudioRecord mRecordInstance = null;
 
-	private short audioData[], audioDataCopy[];
+	private short[] audioData;
+	private short[] audioDataCopy;
 	private int bufferSize;
 	private int secondsToRecord;
 	private volatile boolean continuous;
 	public String code;
 
 	private AudioFingerprinterListener listener;
+
+	private static final Util util = new Util();
 
 	/**
 	 * Constructor for the class
@@ -79,7 +84,7 @@ public class AudioFingerprinter implements Runnable
 	 */
 	public void fingerprint()
 	{
-		// set default listening time to 20 seconds
+		// set default listening time to 10 seconds
 		this.fingerprint(10);
 	}
 
@@ -102,6 +107,7 @@ public class AudioFingerprinter implements Runnable
 	 */
 	public void fingerprint(int seconds, boolean continuous)
 	{
+		util.updateLog("AudioFingerprinter - fingerprint");
 		if(this.isRunning)
 			return;
 
@@ -112,7 +118,6 @@ public class AudioFingerprinter implements Runnable
 
 		// start the recording thread
 		thread = new Thread(this);
-		android.util.Log.d("HANDLER", "startato");
 		thread.start();
 	}
 
@@ -121,6 +126,7 @@ public class AudioFingerprinter implements Runnable
 	 */
 	public void stop()
 	{
+		util.updateLog("AudioFingerprinter - stop");
 		this.continuous = false;
 		if(mRecordInstance != null)
 			mRecordInstance.stop();
@@ -148,6 +154,7 @@ public class AudioFingerprinter implements Runnable
 	@Override
 	public void run()
 	{
+		util.updateLog("AudioFingerprinter - run");
 		this.isRunning = true;
 		try
 		{
@@ -226,7 +233,7 @@ public class AudioFingerprinter implements Runnable
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					Log.e("Fingerprinter", e.getLocalizedMessage());
+					util.updateLog("AudioFingerprinter - run - do | " + e );
 
 					didFailWithException(e);
 				}
@@ -236,8 +243,8 @@ public class AudioFingerprinter implements Runnable
 		}
 		catch (Exception e)
 		{
+			util.updateLog("AudioFingerprinter - run | " + e);
 			e.printStackTrace();
-			Log.e("Fingerprinter", e.getLocalizedMessage());
 
 			didFailWithException(e);
 		}
@@ -256,6 +263,7 @@ public class AudioFingerprinter implements Runnable
 
 	private static String convertStreamToString(InputStream is)
 	{
+		util.updateLog("AudioFingerprinter - convertStreamToString");
 		/*
 		 * To convert the InputStream to String we use the BufferedReader.readLine()
 		 * method. We iterate until the BufferedReader return null which means
@@ -271,11 +279,13 @@ public class AudioFingerprinter implements Runnable
 				sb.append(line + "\n");
 			}
 		} catch (IOException e) {
+			util.updateLog("AudioFingerprinter - convertStreamToString | " + e);
 			e.printStackTrace();
 		} finally {
 			try {
 				is.close();
 			} catch (IOException e) {
+				util.updateLog("AudioFingerprinter - convertStreamToString | " + e);
 				e.printStackTrace();
 			}
 		}
@@ -284,8 +294,9 @@ public class AudioFingerprinter implements Runnable
 
 	private String messageForCode(int code)
 	{
+		util.updateLog("AudioFingerprinter - messageForCode");
 		try{
-			String codes[] = {
+			String[] codes = {
 					"NOT_ENOUGH_CODE", "CANNOT_DECODE", "SINGLE_BAD_MATCH",
 					"SINGLE_GOOD_MATCH", "NO_RESULTS", "MULTIPLE_GOOD_MATCH_HISTOGRAM_INCREASED",
 					"MULTIPLE_GOOD_MATCH_HISTOGRAM_DECREASED", "MULTIPLE_BAD_HISTOGRAM_MATCH", "MULTIPLE_GOOD_MATCH"
@@ -295,12 +306,14 @@ public class AudioFingerprinter implements Runnable
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
+			util.updateLog("AudioFingerprinter - messageForCode | " + e);
 			return "UNKNOWN";
 		}
 	}
 
 	private void didFinishListening()
 	{
+		util.updateLog("AudioFingerprinter - didFinishListening");
 		if(listener == null)
 			return;
 
@@ -321,6 +334,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void didFinishListeningPass()
 	{
+		util.updateLog("AudioFingerprinter - didFinishListeningPass");
 		if(listener == null)
 			return;
 
@@ -341,7 +355,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void willStartListening()
 	{
-		//Log.v("AudioFingerprinter", "willStartListening");
+		util.updateLog("AudioFingerprinter - willStartListening");
 
 		if(listener == null)
 			return;
@@ -363,7 +377,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void willStartListeningPass()
 	{
-		//Log.v("AudioFingerprinter", "willStartListeningPass");
+		util.updateLog("AudioFingerprinter - willStartListeningPass");
 
 		if(listener == null)
 			return;
@@ -385,7 +399,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void didGenerateFingerprintCode(final String code)
 	{
-		//Log.v("AudioFingerprinter", "didGenerateFingerprintCode - code: " + code);
+		util.updateLog("AudioFingerprinter - didGenerateFingerprintCode");
 
 		if(listener == null)
 			return;
@@ -407,7 +421,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void didFindMatchForCode(final Hashtable<String, String> table, final String code)
 	{
-		Log.v("AudioFingerprinter", "didFindMatchForCode - table: " + table);
+		util.updateLog("AudioFingerprinter - didFindMatchForCode");
 
 		if(listener == null)
 			return;
@@ -429,7 +443,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void didNotFindMatchForCode(final String code)
 	{
-		Log.v("AudioFingerprinter", "didNotFindMatchForCode");
+		util.updateLog("AudioFingerprinter - didNotFindMatchForCode");
 
 		if(listener == null)
 			return;
@@ -451,7 +465,7 @@ public class AudioFingerprinter implements Runnable
 
 	private void didFailWithException(final Exception e)
 	{
-		Log.v("AudioFingerprinter", "didFailWithException - e: " + e.getLocalizedMessage());
+		util.updateLog("AudioFingerprinter - didFailWithException | "+ e);
 
 		if(listener == null)
 			return;
@@ -482,47 +496,47 @@ public class AudioFingerprinter implements Runnable
 		/**
 		 * Called when the fingerprinter process loop has finished
 		 */
-		public void didFinishListening();
+		void didFinishListening();
 
 		/**
 		 * Called when a single fingerprinter pass has finished
 		 */
-		public void didFinishListeningPass();
+		void didFinishListeningPass();
 
 		/**
 		 * Called when the fingerprinter is about to start
 		 */
-		public void willStartListening();
+		void willStartListening();
 
 		/**
 		 * Called when a single listening pass is about to start
 		 */
-		public void willStartListeningPass();
+		void willStartListeningPass();
 
 		/**
 		 * Called when the codegen libary generates a fingerprint code
 		 * @param code the generated fingerprint as a zcompressed, base64 string
 		 */
-		public void didGenerateFingerprintCode(String code);
+		void didGenerateFingerprintCode(String code);
 
 		/**
 		 * Called if the server finds a match for the submitted fingerprint code
 		 * @param table a hashtable with the metadata returned from the server
 		 * @param code the submited fingerprint code
 		 */
-		public void didFindMatchForCode(Hashtable<String, String> table, String code);
+		void didFindMatchForCode(Hashtable<String, String> table, String code);
 
 		/**
 		 * Called if the server DOES NOT find a match for the submitted fingerprint code
 		 * @param code the submited fingerprint code
 		 */
-		public void didNotFindMatchForCode(String code);
+		void didNotFindMatchForCode(String code);
 
 		/**
 		 * Called if there is an error / exception in the fingerprinting process
 		 * @param e an exception with the error
 		 */
-		public void didFailWithException(Exception e);
+		void didFailWithException(Exception e);
 	}
 
 	public class	CodegenThread extends Thread{
@@ -533,9 +547,8 @@ public class AudioFingerprinter implements Runnable
 			codegen  = new Codegen();
 		}
 		public void run() {
-			//Log.d("Fingerprinter", "Audio bytes: " + Arrays.toString(audioData));
+			util.updateLog("AudioFingerprinter - CodegenThread");
 			code = codegen.generate(audioData, samIn);
-			//Log.d("Fingerprinter", "Codegen created in: " + (System.currentTimeMillis() - time) + " millis");
 			Log.d("Fingerprinter", "Fingerprint: " + code);
 		}
 	}
