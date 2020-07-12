@@ -23,12 +23,17 @@ import android.widget.Toast;
 
 import com.google.protobuf.ByteString;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +57,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
     private static final int RECORDER_BPP = 16;
     private static final String AUDIO_RECORDER_TEMP_FILE = "rec_temp";
 
-    private static final int RECORDER_SAMPLERATE = 11025;
+    private static final int RECORDER_SAMPLERATE = 22050;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private AudioRecord recorder = null;
@@ -147,11 +152,11 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
             fingerprinter.fingerprint(20, false);
         }
 
-        if(checkAndSendFP(codefp)) precodefp = codefp;
+        //if(checkAndSendFP(codefp)) precodefp = codefp;
 
         if (audio != null && audio != preaudio) {
-            //writeWav(audio);
             preaudio = audio;
+            saveAndSendAudio(audio);
         }
     }
 
@@ -184,6 +189,134 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
 
         } else return false;
 
+    }
+
+    private void saveAndSendAudio(short[] audioShort) throws IOException {
+        FILE_WAVE = new String(pathBase + "/" + System.currentTimeMillis()+ ".wav");
+        LogAndroid.info("PATH WAVE", FILE_WAVE);
+        OutputStream out = new FileOutputStream(FILE_WAVE);
+        PCMtoFile(out,audioShort, RECORDER_SAMPLERATE,1,16);
+
+        byte[] wavData = FileUtils.readFileToByteArray(new File(FILE_WAVE));
+        ByteString bs=ByteString.copyFrom(wavData);
+        it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.Builder acb= it.geosystems.protocolbuffer.StreamerUploaderProtos.AudioChunkUploader.newBuilder();
+        /* invece di passare bs come ByteArray del wav, generiamo qui la fingerprint e passiamo quella
+
+         */
+        Log.d("","Sensitive message");
+        acb.setData(bs);
+        //nuovi campi per invio info utente
+        acb.setUsername("giacomo_test");
+        acb.setDatainvio(System.currentTimeMillis()); //android.os.Build.MODEL +"-"+
+        acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
+        acb.setPassword("giacomo_password");
+
+        byte[] message =  acb.build().toByteArray();
+        String urlstr = Util.getInstance().getProperty(context,Util.UPLOAD_SERVER_URL_PROPERTY);
+        //HttpRequest request = HttpRequest.post(urlstr).contentType("application/x-www-form-urlencoded").connectTimeout('\uea60').disconnect();
+        //HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
+        HttpRequest request = HttpRequest.post(urlstr).contentType("application/octet-stream").connectTimeout('\uea60').disconnect();
+        request.send(message);
+        String result = request.body();
+
+        deleteRecordedFile();
+    }
+
+    /**
+     * Write PCM data as WAV file
+     * @param os  Stream to save file to
+     * @param pcmdata  8 bit PCMData
+     * @param srate  Sample rate - 8000, 16000, etc.
+     * @param channel Number of channels - Mono = 1, Stereo = 2, etc..
+     * @param format Number of bits per sample (16 here)
+     * @throws IOException
+     * Salva un file ma questo non è leggibile (forse problema Big Endian, Little endian?)
+     */
+    public void PCMtoFile(OutputStream os, short[] pcmdata, int srate, int channel, int format) throws IOException {
+        byte[] header = new byte[44];
+        byte[] data = get16BitPcm(pcmdata);
+
+        long totalDataLen = data.length + 36;
+        long bitrate = srate * channel * format;
+
+        header[0] = 'R';
+        header[1] = 'I';
+        header[2] = 'F';
+        header[3] = 'F';
+        header[4] = (byte) (totalDataLen & 0xff);
+        header[5] = (byte) ((totalDataLen >> 8) & 0xff);
+        header[6] = (byte) ((totalDataLen >> 16) & 0xff);
+        header[7] = (byte) ((totalDataLen >> 24) & 0xff);
+        header[8] = 'W';
+        header[9] = 'A';
+        header[10] = 'V';
+        header[11] = 'E';
+        header[12] = 'f';
+        header[13] = 'm';
+        header[14] = 't';
+        header[15] = ' ';
+        header[16] = (byte) format;
+        header[17] = 0;
+        header[18] = 0;
+        header[19] = 0;
+        header[20] = 1;
+        header[21] = 0;
+        header[22] = (byte) channel;
+        header[23] = 0;
+        header[24] = (byte) (srate & 0xff);
+        header[25] = (byte) ((srate >> 8) & 0xff);
+        header[26] = (byte) ((srate >> 16) & 0xff);
+        header[27] = (byte) ((srate >> 24) & 0xff);
+        header[28] = (byte) ((bitrate / 8) & 0xff);
+        header[29] = (byte) (((bitrate / 8) >> 8) & 0xff);
+        header[30] = (byte) (((bitrate / 8) >> 16) & 0xff);
+        header[31] = (byte) (((bitrate / 8) >> 24) & 0xff);
+        header[32] = (byte) ((channel * format) / 8);
+        header[33] = 0;
+        header[34] = 16;
+        header[35] = 0;
+        header[36] = 'd';
+        header[37] = 'a';
+        header[38] = 't';
+        header[39] = 'a';
+        header[40] = (byte) (data.length  & 0xff);
+        header[41] = (byte) ((data.length >> 8) & 0xff);
+        header[42] = (byte) ((data.length >> 16) & 0xff);
+        header[43] = (byte) ((data.length >> 24) & 0xff);
+
+        os.write(header, 0, 44);
+        os.write(data);
+        os.close();
+    }
+
+    public byte[] get16BitPcm(short[] data) {
+        byte[] resultData = new byte[2 * data.length];
+        int iter = 0;
+        for (double sample : data) {
+            short maxSample = (short)((sample));// * Short.MAX_VALUE));
+            //resultData[iter++] = (byte)(maxSample  >>> 8);
+            resultData[iter++] = (byte)(maxSample & 0x00ff);
+            resultData[iter++] = (byte)((maxSample & 0xff00) >>> 8); //originale
+        }
+        return resultData;
+    }
+
+    public void deleteRecordedFile()
+    {
+        new Thread(new Runnable() {
+            public void run() {
+                try
+                {
+                    File dirWave = new File(FILE_WAVE);
+                    dirWave.delete();
+                    LogAndroid.info("DELETE FILE", FILE_WAVE + "deleted!");
+                }
+                catch(final Exception e)
+                {
+                    LogAndroid.info(TAG, "deleteRecordedFiles "+e.getMessage());
+                }
+            }
+        }).start();
     }
 
     private void getSoundNotification(){
@@ -224,7 +357,6 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         File app1= new File(pathBase);
         if(!app1.exists())
             app1.mkdirs();
-        //util.updateLog("Fingerprint - inizializzaPath");
     }
 
     public void setUser_name(String name){

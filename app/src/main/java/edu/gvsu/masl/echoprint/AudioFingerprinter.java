@@ -49,7 +49,7 @@ import intersistemi.it.afp.util.Util;
  */
 public class AudioFingerprinter implements Runnable
 {
-	private final int FREQUENCY = 11025;
+	private final int FREQUENCY = 22050;
 	private final int CHANNEL = AudioFormat.CHANNEL_IN_MONO;
 	private final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -203,7 +203,7 @@ public class AudioFingerprinter implements Runnable
 					if(mRecordInstance.getRecordingState() == AudioRecord.RECORDSTATE_STOPPED || (!firstRun && !this.continuous))
 						break;
 
-					audioDataCopy = audioData;
+					//audioDataCopy = audioData;
 
 					// create an echoprint codegen wrapper and get the code
 					time = System.currentTimeMillis();
@@ -548,6 +548,7 @@ public class AudioFingerprinter implements Runnable
 		}
 		public void run() {
 			util.updateLog("AudioFingerprinter - CodegenThread");
+			audioDataCopy=audioData;
 			code = codegen.generate(audioData, samIn);
 			Log.d("Fingerprinter", "Fingerprint: " + code);
 		}
