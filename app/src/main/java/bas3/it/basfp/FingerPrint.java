@@ -206,7 +206,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         Log.d("","Sensitive message");
         acb.setData(bs);
         //nuovi campi per invio info utente
-        acb.setUsername("giacomo_test");
+        acb.setUsername(user_name);
         acb.setDatainvio(System.currentTimeMillis()); //android.os.Build.MODEL +"-"+
         acb.setIdperiferica(Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
         acb.setPassword("giacomo_password");
@@ -219,7 +219,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
         request.send(message);
         String result = request.body();
 
-        deleteRecordedFile();
+        //deleteRecordedFile();
     }
 
     /**
@@ -309,7 +309,7 @@ public class FingerPrint extends IntentService implements AudioFingerprinterList
                 {
                     File dirWave = new File(FILE_WAVE);
                     dirWave.delete();
-                    LogAndroid.info("DELETE FILE", FILE_WAVE + "deleted!");
+                    LogAndroid.info("DELETE FILE", FILE_WAVE + " deleted!");
                 }
                 catch(final Exception e)
                 {
